@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard Peraturan Ketahanan Pangan Nasional</title>
+<style>
+  :root {
+    --bg: #F8F7F3;
+    --surface: #FFFFFF;
+    --surface-2: #F1EFE8;
+    --border: #E3E1D8;
+    --border-strong: #C9C7BE;
+    --text: #2C2C2A;
+    --text-2: #5F5E5A;
+    --text-3: #888780;
+    --accent: #185FA5;
+    --accent-bg: #E6F1FB;
+    --purple: #534AB7;
+    --purple-bg: #EEEDFE;
+    --purple-text: #26215C;
+    --blue: #185FA5;
+    --blue-bg: #E6F1FB;
+    --blue-text: #042C53;
+    --teal: #0F6E56;
+    --teal-bg: #E1F5EE;
+    --teal-text: #04342C;
+    --amber: #854F0B;
+    --amber-bg: #FAEEDA;
+    --amber-text: #412402;
+    --gray: #5F5E5A;
+    --gray-bg: #F1EFE8;
+    --gray-text: #2C2C2A;
+    --success: #3B6D11;
+    --success-bg: #EAF3DE;
+    --warning: #854F0B;
+    --warning-bg: #FAEEDA;
+    --danger: #A32D2D;
+    --danger-bg: #FCEBEB;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 1px 2px rgba(0,0,0,0.03), 0 1px 3px rgba(0,0,0,0.04);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a19;
+      --surface: #262625;
+      --surface-2: #2f2f2e;
+      --border: #3a3a38;
+      --border-strong: #4a4a48;
+      --text: #E8E7E1;
+      --text-2: #B4B2A9;
+      --text-3: #888780;
+      --accent: #85B7EB;
+      --accent-bg: #0C447C;
+      --purple: #AFA9EC;
+      --purple-bg: #3C3489;
+      --purple-text: #EEEDFE;
+      --blue: #85B7EB;
+      --blue-bg: #0C447C;
+      --blue-text: #E6F1FB;
+      --teal: #5DCAA5;
+      --teal-bg: #085041;
+      --teal-text: #E1F5EE;
+      --amber: #EF9F27;
+      --amber-bg: #633806;
+      --amber-text: #FAEEDA;
+      --gray: #B4B2A9;
+      --gray-bg: #3a3a38;
+      --gray-text: #F1EFE8;
+      --success: #97C459;
+      --success-bg: #27500A;
+      --warning: #FAC775;
+      --warning-bg: #633806;
+      --danger: #F09595;
+      --danger-bg: #791F1F;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  header { border-bottom: 0.5px solid var(--border); padding: 24px 0 20px; margin-bottom: 24px; }
+  header h1 { margin: 0 0 4px; font-size: 24px; font-weight: 500; letter-spacing: -0.3px; }
+  header p { margin: 0; color: var(--text-2); font-size: 14px; }
+  .header-meta { display: inline-flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; }
+  .badge-status { background: var(--success-bg); color: var(--success); }
+  .badge-neutral { background: var(--surface-2); color: var(--text-2); }
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 32px; }
+  .kpi { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px; }
+  .kpi-label { font-size: 12px; color: var(--text-2); margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .kpi-value { font-size: 28px; font-weight: 500; margin: 0; letter-spacing: -0.5px; }
+  .kpi-sub { font-size: 12px; color: var(--text-3); margin: 4px 0 0; }
+  .tier-strip { display: flex; gap: 4px; margin-top: 12px; height: 6px; border-radius: 3px; overflow: hidden; background: var(--surface-2); }
+  .tier-strip span { height: 100%; }
+  .tier-uu { background: var(--purple); }
+  .tier-pp { background: var(--blue); }
+  .tier-prs { background: var(--teal); }
+  .tier-inp { background: var(--amber); }
+  .tier-tek { background: var(--gray); }
+  .tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 0.5px solid var(--border); overflow-x: auto; }
+  .tab { padding: 10px 16px; background: transparent; border: none; color: var(--text-2); font-size: 14px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; font-family: inherit; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .filter-bar { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .search-input { flex: 1; min-width: 220px; padding: 8px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 14px; background: var(--surface); color: var(--text); font-family: inherit; }
+  .search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+  .tier-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tier-chip { padding: 6px 12px; border-radius: 16px; font-size: 12px; font-weight: 500; cursor: pointer; user-select: none; border: 0.5px solid; }
+  .tier-chip.chip-uu { border-color: var(--purple); color: var(--purple-text); background: var(--purple-bg); }
+  .tier-chip.chip-pp { border-color: var(--blue); color: var(--blue-text); background: var(--blue-bg); }
+  .tier-chip.chip-prs { border-color: var(--teal); color: var(--teal-text); background: var(--teal-bg); }
+  .tier-chip.chip-inp { border-color: var(--amber); color: var(--amber-text); background: var(--amber-bg); }
+  .tier-chip.chip-tek { border-color: var(--border-strong); color: var(--text-2); background: var(--gray-bg); }
+  .tier-chip.inactive { opacity: 0.35; }
+  .cluster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+  .cluster-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+  .cluster-head { padding: 14px 16px; display: flex; align-items: center; gap: 12px; cursor: pointer; user-select: none; }
+  .cluster-head:hover { background: var(--surface-2); }
+  .cluster-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: var(--accent-bg); color: var(--accent); font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .cluster-title { flex: 1; }
+  .cluster-name { font-weight: 500; font-size: 15px; margin: 0 0 2px; }
+  .cluster-count { font-size: 12px; color: var(--text-3); margin: 0; }
+  .chev { color: var(--text-3); font-size: 20px; transition: transform 0.2s; line-height: 1; }
+  .cluster-card.collapsed .chev { transform: rotate(-90deg); }
+  .cluster-body { padding: 4px 16px 16px; border-top: 0.5px solid var(--border); }
+  .cluster-card.collapsed .cluster-body { display: none; }
+  .cluster-desc { font-size: 13px; color: var(--text-2); margin: 12px 0 12px; padding-bottom: 12px; border-bottom: 0.5px dashed var(--border); }
+  .reg-item { padding: 10px 0; border-top: 0.5px dashed var(--border); }
+  .reg-item:first-child { border-top: none; }
+  .reg-row { display: flex; align-items: flex-start; gap: 10px; }
+  .reg-label { font-size: 13.5px; color: var(--text); font-weight: 500; margin: 0; line-height: 1.5; flex: 1; min-width: 0; }
+  .reg-key { font-size: 12.5px; color: var(--text-2); margin: 6px 0 0 54px; line-height: 1.6; }
+  .tier-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; height: 20px; padding: 0 8px; border-radius: 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; flex-shrink: 0; }
+  .tier-badge.uu { background: var(--purple-bg); color: var(--purple-text); }
+  .tier-badge.pp { background: var(--blue-bg); color: var(--blue-text); }
+  .tier-badge.prs { background: var(--teal-bg); color: var(--teal-text); }
+  .tier-badge.inp { background: var(--amber-bg); color: var(--amber-text); }
+  .tier-badge.tek { background: var(--gray-bg); color: var(--gray-text); }
+  .reg-year { font-size: 11px; color: var(--text-3); }
+  .cluster-tags { display: flex; gap: 6px; margin: 4px 0 0 54px; flex-wrap: wrap; }
+  .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 10px; font-size: 11px; background: var(--surface-2); color: var(--text-2); }
+  .empty { text-align: center; padding: 48px 16px; color: var(--text-3); font-size: 14px; }
+  .peraturan-list { display: flex; flex-direction: column; gap: 8px; }
+  .peraturan-item { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 14px 16px; cursor: pointer; }
+  .peraturan-item:hover { border-color: var(--border-strong); background: var(--surface-2); }
+  .peraturan-head { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .peraturan-name { font-weight: 500; font-size: 14.5px; margin: 0; flex: 1; }
+  .peraturan-key { font-size: 13px; color: var(--text-2); margin: 0; line-height: 1.6; }
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before { content: ""; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--border); border-radius: 1px; }
+  .timeline-year { position: relative; margin-bottom: 24px; }
+  .timeline-year-label { position: absolute; left: -32px; top: 0; width: 26px; height: 26px; border-radius: 50%; background: var(--accent); color: white; font-size: 11px; font-weight: 500; display: flex; align-items: center; justify-content: center; z-index: 1; }
+  .timeline-year-title { font-size: 15px; font-weight: 500; margin: 0 0 8px; color: var(--text); }
+  .timeline-items { display: flex; flex-direction: column; gap: 6px; padding-left: 8px; }
+  .timeline-item { display: flex; gap: 10px; padding: 8px 12px; background: var(--surface); border-radius: var(--radius); border: 0.5px solid var(--border); font-size: 13px; align-items: flex-start; }
+  .timeline-item strong { font-weight: 500; }
+  .coherence-section { margin-bottom: 28px; }
+  .coherence-title { font-size: 16px; font-weight: 500; margin: 0 0 4px; display: flex; align-items: center; gap: 8px; }
+  .coherence-desc { font-size: 13px; color: var(--text-2); margin: 0 0 14px; }
+  .coherence-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+  .coherence-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; border-left: 3px solid; }
+  .coherence-card.sinergi { border-left-color: var(--success); }
+  .coherence-card.gap { border-left-color: var(--warning); }
+  .coherence-card.tegangan { border-left-color: var(--danger); }
+  .coherence-link { font-size: 12px; color: var(--text-3); margin: 0 0 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .coherence-card h4 { margin: 0 0 6px; font-size: 14.5px; font-weight: 500; }
+  .coherence-card p { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.6; }
+  .coherence-card p + p { margin-top: 6px; }
+  .matrix-wrapper { overflow-x: auto; margin-bottom: 24px; }
+  .matrix { border-collapse: collapse; font-size: 11.5px; background: var(--surface); border-radius: var(--radius-lg); overflow: hidden; }
+  .matrix th, .matrix td { padding: 6px 8px; text-align: center; border: 0.5px solid var(--border); }
+  .matrix th { background: var(--surface-2); font-weight: 500; color: var(--text-2); font-size: 11px; }
+  .matrix th.row { text-align: left; font-weight: 500; color: var(--text); background: var(--surface-2); }
+  .matrix .m-s { background: var(--success-bg); color: var(--success); font-weight: 600; }
+  .matrix .m-g { background: var(--warning-bg); color: var(--warning); font-weight: 600; }
+  .matrix .m-t { background: var(--danger-bg); color: var(--danger); font-weight: 600; }
+  .matrix .m-x { color: var(--text-3); }
+  .matrix .m-self { background: var(--surface-2); color: var(--text-3); }
+  .callout { background: var(--surface); border: 0.5px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 24px; }
+  .callout p { margin: 0; font-size: 13.5px; color: var(--text-2); line-height: 1.65; }
+  .callout p + p { margin-top: 8px; }
+  .callout strong { color: var(--text); font-weight: 500; }
+  .fact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .fact-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .fact-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.4px; margin: 0 0 6px; }
+  .fact-value { font-size: 20px; font-weight: 500; margin: 0 0 4px; letter-spacing: -0.2px; }
+  .fact-desc { font-size: 12px; color: var(--text-2); margin: 0; line-height: 1.5; }
+  .section-title { font-size: 17px; font-weight: 500; margin: 24px 0 4px; }
+  .section-desc { font-size: 13px; color: var(--text-2); margin: 0 0 16px; }
+  .legend-inline { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2); }
+  .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+  .adequacy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+  .adequacy-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .adequacy-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .adequacy-name { flex: 1; font-weight: 500; font-size: 14.5px; margin: 0; }
+  .adequacy-score { display: inline-flex; align-items: center; justify-content: center; min-width: 32px; height: 24px; border-radius: 12px; font-size: 12px; font-weight: 600; padding: 0 10px; }
+  .score-1, .score-2 { background: var(--danger-bg); color: var(--danger); }
+  .score-3 { background: var(--warning-bg); color: var(--warning); }
+  .score-4, .score-5 { background: var(--success-bg); color: var(--success); }
+  .adequacy-bar { display: flex; gap: 3px; margin-bottom: 10px; }
+  .adequacy-bar span { flex: 1; height: 6px; border-radius: 3px; background: var(--surface-2); }
+  .adequacy-bar span.on { background: currentColor; }
+  .adequacy-bar.s1, .adequacy-bar.s2 { color: var(--danger); }
+  .adequacy-bar.s3 { color: var(--warning); }
+  .adequacy-bar.s4, .adequacy-bar.s5 { color: var(--success); }
+  .adequacy-body { font-size: 12.5px; color: var(--text-2); line-height: 1.55; }
+  .adequacy-body strong { color: var(--text); font-weight: 500; display: block; margin: 8px 0 3px; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.3px; }
+  .gap-priority-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+  .gap-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .gap-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .gap-title { font-weight: 500; font-size: 14.5px; margin: 0; flex: 1; }
+  .priority-badge { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; flex-shrink: 0; }
+  .prio-tinggi { background: var(--danger-bg); color: var(--danger); }
+  .prio-sedang { background: var(--warning-bg); color: var(--warning); }
+  .prio-rendah { background: var(--accent-bg); color: var(--accent); }
+  .gap-meta { font-size: 12px; color: var(--text-3); margin: 0 0 6px; }
+  .gap-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; margin: 6px 0 0; }
+  .gap-desc strong { color: var(--text); font-weight: 500; }
+  .rekomendasi-list { display: flex; flex-direction: column; gap: 10px; }
+  .rekomendasi-item { background: var(--surface); border: 0.5px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-lg); padding: 12px 16px; display: flex; gap: 12px; align-items: flex-start; }
+  .rekomendasi-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: var(--accent-bg); color: var(--accent); font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .rekomendasi-body { flex: 1; }
+  .rekomendasi-title { font-weight: 500; font-size: 14px; margin: 0 0 4px; }
+  .rekomendasi-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.55; }
+  .rekomendasi-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text-3); text-align: center; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  @media (max-width: 768px) {
+    .container { padding: 16px; }
+    header h1 { font-size: 20px; }
+    .kpi-value { font-size: 22px; }
+    .cluster-grid, .coherence-cards { grid-template-columns: 1fr; }
+    .filter-bar { flex-direction: column; align-items: stretch; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Dashboard peraturan ketahanan pangan nasional</h1>
+  <p>Peta hierarki kebijakan · 12 klaster program · Analisis keselarasan antar-kebijakan</p>
+  <div class="header-meta">
+    <span class="badge badge-status">Swasembada beras 2025 · 34,71 juta ton</span>
+    <span class="badge badge-neutral">Data per Mei 2026</span>
+    <span class="badge badge-neutral">Landasan RPJMN 2025-2029</span>
+  </div>
+</header>
+
+<section class="kpi-grid" id="kpi-grid"></section>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="ringkasan">Ringkasan</button>
+  <button class="tab" data-tab="klaster">Klaster</button>
+  <button class="tab" data-tab="peraturan">Peraturan</button>
+  <button class="tab" data-tab="timeline">Timeline</button>
+  <button class="tab" data-tab="keselarasan">Analisis keselarasan</button>
+  <button class="tab" data-tab="kecukupan">Kecukupan &amp; gap</button>
+</nav>
+
+<section class="tab-panel active" id="tab-ringkasan">
+  <div class="callout">
+    <p><strong>Kerangka regulasi ketahanan pangan Indonesia</strong> disusun berjenjang dari 4 Undang-Undang inti (UU 18/2012 Pangan, UU 19/2013 Perlindungan Petani, UU 22/2019 SBPB, UU 41/2009 LP2B) yang diperkuat PP 17/2015 Ketahanan Pangan dan Gizi, PP 86/2019 Keamanan Pangan, dan PP 40/2025 Kebijakan Energi Nasional.</p>
+    <p>Pemerintahan Prabowo (2024-2029) mengintensifkan lewat instrumen presidensial cepat: <strong>Perpres 66/2021 Bapanas</strong> sebagai simpul koordinasi, <strong>Perpres 125/2022 CPP</strong> untuk cadangan multi-komoditas, serta rangkaian Inpres 2025-2026 (Inpres 2/2025 irigasi, Inpres 10/2025 dan 3/2026 jagung, Inpres 14/2025 KSPEA, Inpres 4/2026 HPP gabah, Inpres 2/2026 percepatan swasembada).</p>
+    <p>Capaian 2025 didorong tiga faktor: (1) reformasi input via <strong>penyaluran pupuk tepat waktu 1 Januari dan penurunan HET 20%</strong>, (2) iklim baik (La Niña ringan, IOD negatif) yang memperluas luas panen 12,98% menjadi 11,35 juta ha, (3) kebijakan <strong>nol impor</strong> 4 komoditas pokok berdasarkan Neraca Komoditas 2026.</p>
+  </div>
+
+  <p class="section-title">Fakta kunci</p>
+  <p class="section-desc">Indikator ketahanan pangan nasional per Mei 2026</p>
+  <div class="fact-grid">
+    <div class="fact-card">
+      <p class="fact-label">Produksi beras 2025</p>
+      <p class="fact-value">34,71 juta ton</p>
+      <p class="fact-desc">Naik 13,36% dari 2024 (BPS, KSA November 2025)</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">Luas panen padi 2025</p>
+      <p class="fact-value">11,35 juta ha</p>
+      <p class="fact-desc">Naik 12,98% (+1,30 juta ha) dari 2024</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">Cadangan beras BULOG</p>
+      <p class="fact-value">5,3 juta ton</p>
+      <p class="fact-desc">Tertinggi sepanjang 59 tahun sejarah BULOG (Mei 2026)</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">Anggaran pupuk subsidi 2026</p>
+      <p class="fact-value">Rp46,87 T</p>
+      <p class="fact-desc">Alokasi 9,55 juta ton; HET turun 20% via efisiensi industri</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">Realisasi irigasi 2025</p>
+      <p class="fact-value">589.605 ha</p>
+      <p class="fact-desc">Target 2026: 750.000 ha (Inpres 2/2025)</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">Gap penyuluh</p>
+      <p class="fact-value">±45.000 orang</p>
+      <p class="fact-desc">Kebutuhan 83.000 vs aktual ±38.000 (UU 16/2006)</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">HPP gabah 2026</p>
+      <p class="fact-value">Rp6.500 /kg</p>
+      <p class="fact-desc">Naik dari Rp5.500 via Inpres 4/2026</p>
+    </div>
+    <div class="fact-card">
+      <p class="fact-label">Impor beras 2025</p>
+      <p class="fact-value">0 ton</p>
+      <p class="fact-desc">Dari 4,52 juta ton (2024). Target 2026 tetap nol.</p>
+    </div>
+  </div>
+
+  <p class="section-title">Regulasi utama pemerintahan Prabowo (2024-2026)</p>
+  <p class="section-desc">Instrumen kunci untuk percepatan swasembada</p>
+  <div class="peraturan-list" id="top-regulations"></div>
+</section>
+
+<section class="tab-panel" id="tab-klaster">
+  <div class="filter-bar">
+    <input type="text" class="search-input" id="cluster-search" placeholder="Cari peraturan atau klaster...">
+    <div class="tier-filters" id="cluster-tier-filters"></div>
+  </div>
+  <div class="cluster-grid" id="cluster-grid"></div>
+</section>
+
+<section class="tab-panel" id="tab-peraturan">
+  <div class="filter-bar">
+    <input type="text" class="search-input" id="reg-search" placeholder="Cari peraturan berdasarkan nama, nomor, atau kata kunci...">
+    <div class="tier-filters" id="reg-tier-filters"></div>
+  </div>
+  <div class="peraturan-list" id="all-regulations"></div>
+</section>
+
+<section class="tab-panel" id="tab-timeline">
+  <p class="section-desc" style="margin-bottom: 24px;">Kronologi peraturan ketahanan pangan berdasarkan tahun terbitnya</p>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<section class="tab-panel" id="tab-keselarasan">
+  <div class="callout">
+    <p><strong>Analisis keselarasan</strong> mengevaluasi bagaimana peraturan pada 12 klaster saling berhubungan pada tiga pola: <strong>sinergi</strong> (saling memperkuat), <strong>gap</strong> (kesenjangan payung hukum), dan <strong>tegangan</strong> (konflik antar-kebijakan).</p>
+    <p>Analisis mengacu pada tiga aspek: (i) keselarasan strategis pada level tujuan, (ii) keselarasan kelembagaan pada aktor dan tata kelola, (iii) keselarasan operasional pada implementasi lapangan.</p>
+  </div>
+
+  <div class="coherence-section">
+    <h3 class="coherence-title">
+      <span class="legend-dot" style="background: var(--success);"></span>
+      Sinergi antar-kebijakan
+    </h3>
+    <p class="coherence-desc">Peraturan yang saling memperkuat dan menciptakan efek gabungan positif</p>
+    <div class="coherence-cards" id="sinergi-list"></div>
+  </div>
+
+  <div class="coherence-section">
+    <h3 class="coherence-title">
+      <span class="legend-dot" style="background: var(--warning);"></span>
+      Gap regulasi
+    </h3>
+    <p class="coherence-desc">Kekosongan atau kelemahan payung hukum yang berdampak pada implementasi</p>
+    <div class="coherence-cards" id="gap-list"></div>
+  </div>
+
+  <div class="coherence-section">
+    <h3 class="coherence-title">
+      <span class="legend-dot" style="background: var(--danger);"></span>
+      Tegangan antar-kebijakan
+    </h3>
+    <p class="coherence-desc">Konflik atau ketidaksinkronan yang perlu diselesaikan lewat harmonisasi regulasi</p>
+    <div class="coherence-cards" id="tegangan-list"></div>
+  </div>
+
+  <div class="coherence-section">
+    <h3 class="coherence-title">Matriks saling-ketergantungan antar-klaster</h3>
+    <p class="coherence-desc">
+      <span class="legend-inline"><span class="legend-dot" style="background: var(--success-bg); border: 0.5px solid var(--success);"></span> S = sinergi kuat</span> &nbsp;
+      <span class="legend-inline"><span class="legend-dot" style="background: var(--warning-bg); border: 0.5px solid var(--warning);"></span> G = gap</span> &nbsp;
+      <span class="legend-inline"><span class="legend-dot" style="background: var(--danger-bg); border: 0.5px solid var(--danger);"></span> T = tegangan</span>
+    </p>
+    <div class="matrix-wrapper" id="matrix"></div>
+  </div>
+</section>
+
+<section class="tab-panel" id="tab-kecukupan">
+  <div class="callout">
+    <p><strong>Analisis kecukupan &amp; gap</strong> mengevaluasi apakah kerangka regulasi yang ada memadai untuk menjawab kebutuhan operasional program ketahanan pangan pada setiap klaster.</p>
+    <p>Skor kecukupan menggunakan skala <strong>1-5</strong>: 1 = sangat kurang (regulasi minim, banyak gap kritikal), 3 = cukup (regulasi ada tapi perlu penguatan), 5 = memadai (regulasi lengkap, integrasi antar-tier baik). Penilaian mencakup tiga dimensi: kelengkapan hierarki (UU→PP→Perpres→Peraturan Teknis), kejelasan mekanisme operasional, dan kemutakhiran (relevansi dengan kondisi terkini).</p>
+  </div>
+
+  <p class="section-title">Skor kecukupan per klaster</p>
+  <p class="section-desc">Ringkasan kondisi regulasi tiap klaster program</p>
+  <div class="adequacy-grid" id="adequacy-grid"></div>
+
+  <p class="section-title" style="margin-top: 32px;">Gap regulasi prioritas</p>
+  <p class="section-desc">Kekurangan payung hukum yang perlu segera ditutup</p>
+  <div class="gap-priority-grid" id="gap-priority-grid"></div>
+
+  <p class="section-title" style="margin-top: 32px;">Rekomendasi harmonisasi regulasi</p>
+  <p class="section-desc">Usulan revisi, penerbitan baru, dan konsolidasi untuk periode 2026-2029</p>
+  <div class="rekomendasi-list" id="rekomendasi-list"></div>
+</section>
+
+<footer>
+  Dashboard peraturan ketahanan pangan nasional · Data indikatif berdasarkan referensi terbuka per Mei 2026<br>
+  Peraturan level teknis (Permen, Perbadan, Kepmen) bersifat contoh terpilih; daftar lengkap dapat diakses melalui JDIH masing-masing K/L
+</footer>
+
+</div>
+
+<script>
+const TIER_LABELS = { uu: "UU", pp: "PP", prs: "Perpres", inp: "Inpres", tek: "Teknis" };
+const TIER_ORDER = ["uu", "pp", "prs", "inp", "tek"];
+
+const CLUSTERS = [
+  { id: "umbrella", name: "Payung hukum umum", desc: "Landasan yang berlaku lintas klaster program ketahanan pangan" },
+  { id: "lahan", name: "Lahan pertanian", desc: "Cetak sawah, optimalisasi lahan rawa, dan perlindungan LP2B untuk menjaga baku sawah nasional 7,38 juta ha" },
+  { id: "benih", name: "Bibit dan benih unggul", desc: "Sistem perbenihan nasional, varietas adaptif iklim, dan distribusi via e-Katalog (target 87.000 ton benih untuk 3 juta ha)" },
+  { id: "pupuk", name: "Pupuk bersubsidi", desc: "Alokasi 9,55 juta ton (Rp46,87 T) untuk petani ≤2 ha dengan HET turun 20% via efisiensi industri" },
+  { id: "alsintan", name: "Alat dan mesin pertanian", desc: "Bantuan alsintan prapanen (traktor, transplanter, drone) dan pascapanen (combine, dryer, RMU) via Brigade Pangan" },
+  { id: "pascapanen", name: "Penanganan pascapanen", desc: "Infrastruktur pengeringan, penggilingan, dan gudang untuk menekan susut panen dari 12-15% menjadi <8%" },
+  { id: "infra", name: "Infrastruktur pangan (irigasi)", desc: "Pembangunan bendungan, rehabilitasi jaringan primer/sekunder/tersier, dan pompanisasi (589.605 ha 2025)" },
+  { id: "penyuluh", name: "Penyuluh pertanian", desc: "Sistem penyuluhan pertanian, perikanan, dan kehutanan dengan kebutuhan ideal 83.000 penyuluh (gap 45.000)" },
+  { id: "cadangan", name: "Cadangan pangan pemerintah", desc: "CBP 5,3 juta ton (2026), CJP, CKP untuk 11 komoditas pokok; dikelola BULOG dengan penugasan Perpres 125/2022" },
+  { id: "stabilisasi", name: "Stabilisasi harga", desc: "Instrumen SPHP, GPM, FDP, HET/HAP/HPP untuk menjaga inflasi pangan (2,92% pada 2025)" },
+  { id: "supply", name: "Supply chain dan distribusi", desc: "Rantai pasok dari produsen hingga konsumen; termasuk gudang, cold chain, terminal agro, dan Kios Pangan" },
+  { id: "eksim", name: "Ekspor dan impor pangan", desc: "Neraca Komoditas menetapkan kuota; kebijakan nol impor 4 komoditas pokok (beras, jagung pakan, gula, garam) sejak 2025" },
+  { id: "kspea", name: "Kawasan swasembada pangan, energi, dan air (KSPEA)", desc: "Pengembangan Wanam Merauke sebagai PSN 1 juta ha yang mengintegrasikan pilar pangan-energi-air" },
+];
+
+const REGULATIONS = [
+  // UU
+  { id: "uu-18-2012", tier: "uu", year: 2012, title: "UU 18/2012 tentang Pangan", clusters: ["umbrella","cadangan","stabilisasi","eksim","pascapanen"], key: "Fondasi hukum ketahanan pangan; definisi ketahanan, kedaulatan, dan kemandirian pangan; amanat cadangan pangan pemerintah dan daerah." },
+  { id: "uu-19-2013", tier: "uu", year: 2013, title: "UU 19/2013 tentang Perlindungan dan Pemberdayaan Petani", clusters: ["umbrella","penyuluh","pupuk","benih","alsintan"], key: "Perlindungan petani dari risiko produksi, harga, dan pasar; kewajiban pemerintah menyediakan input dan pendampingan." },
+  { id: "uu-22-2019", tier: "uu", year: 2019, title: "UU 22/2019 tentang Sistem Budi Daya Pertanian Berkelanjutan", clusters: ["umbrella","benih","alsintan","pupuk"], key: "Pengaturan produksi pertanian berkelanjutan; perbenihan, perlindungan tanaman, mekanisasi, sarana produksi." },
+  { id: "uu-41-2009", tier: "uu", year: 2009, title: "UU 41/2009 tentang Perlindungan Lahan Pertanian Pangan Berkelanjutan (LP2B)", clusters: ["lahan"], key: "Perlindungan lahan sawah dari konversi; kewajiban pemda menetapkan LP2B dalam RTRW; sanksi bagi alih fungsi tidak sah." },
+  { id: "uu-26-2007", tier: "uu", year: 2007, title: "UU 26/2007 tentang Penataan Ruang", clusters: ["lahan"], key: "Kerangka RTRW nasional-provinsi-kabupaten sebagai instrumen perlindungan lahan pertanian." },
+  { id: "uu-29-2000", tier: "uu", year: 2000, title: "UU 29/2000 tentang Perlindungan Varietas Tanaman", clusters: ["benih"], key: "Hak kekayaan intelektual atas varietas tanaman; insentif pemulia dan produsen benih." },
+  { id: "uu-16-2006", tier: "uu", year: 2006, title: "UU 16/2006 tentang Sistem Penyuluhan Pertanian, Perikanan, dan Kehutanan", clusters: ["penyuluh"], key: "Landasan sistem penyuluhan nasional; kelembagaan BPP tingkat kecamatan; status kepegawaian penyuluh." },
+  { id: "uu-17-2019", tier: "uu", year: 2019, title: "UU 17/2019 tentang Sumber Daya Air", clusters: ["infra"], key: "Kerangka pengelolaan SDA nasional; irigasi sebagai fungsi publik; peran BBWS dan P3A." },
+  { id: "uu-7-2014", tier: "uu", year: 2014, title: "UU 7/2014 tentang Perdagangan", clusters: ["eksim","stabilisasi","supply"], key: "Kerangka perdagangan dalam dan luar negeri; larangan-pembatasan; stabilisasi harga barang pokok." },
+  { id: "uu-11-2020", tier: "uu", year: 2020, title: "UU 11/2020 tentang Cipta Kerja", clusters: ["umbrella","lahan","eksim"], key: "Penyederhanaan perizinan berusaha lintas sektor termasuk pertanian dan pangan." },
+
+  // PP
+  { id: "pp-17-2015", tier: "pp", year: 2015, title: "PP 17/2015 tentang Ketahanan Pangan dan Gizi", clusters: ["umbrella","cadangan","stabilisasi"], key: "Pelaksanaan UU 18/2012; kelembagaan ketahanan pangan pusat-daerah; kebijakan strategis pangan dan gizi." },
+  { id: "pp-86-2019", tier: "pp", year: 2019, title: "PP 86/2019 tentang Keamanan Pangan", clusters: ["umbrella","supply"], key: "Standar keamanan pangan; pengawasan sepanjang rantai pasok; sanitasi dan higiene." },
+  { id: "pp-1-2011", tier: "pp", year: 2011, title: "PP 1/2011 tentang Penetapan dan Alih Fungsi LP2B", clusters: ["lahan"], key: "Mekanisme penetapan LP2B; ketentuan alih fungsi hanya untuk kepentingan umum dan bencana; wajib penggantian." },
+  { id: "pp-25-2012", tier: "pp", year: 2012, title: "PP 25/2012 tentang Sistem Informasi LP2B", clusters: ["lahan"], key: "Basis data spasial LP2B yang wajib diintegrasikan ke RTRW dan sistem informasi pertanahan nasional." },
+  { id: "pp-44-1995", tier: "pp", year: 1995, title: "PP 44/1995 tentang Perbenihan Tanaman", clusters: ["benih"], key: "Sistem perbenihan nasional: pemuliaan, produksi, sertifikasi, distribusi, dan pengawasan mutu benih." },
+  { id: "pp-121-2015", tier: "pp", year: 2015, title: "PP 121/2015 tentang Pengusahaan Sumber Daya Air", clusters: ["infra"], key: "Ketentuan pengusahaan SDA; prioritas untuk pertanian rakyat; peran BUMN air." },
+  { id: "pp-43-2009", tier: "pp", year: 2009, title: "PP 43/2009 tentang Pembiayaan, Pembinaan, dan Pengawasan Penyuluhan", clusters: ["penyuluh"], key: "Mekanisme pembiayaan penyuluhan; pembagian kewenangan pusat-daerah; sertifikasi kompetensi penyuluh." },
+  { id: "pp-5-2021", tier: "pp", year: 2021, title: "PP 5/2021 tentang Perizinan Berusaha Berbasis Risiko", clusters: ["eksim","supply"], key: "OSS-RBA untuk izin usaha; klasifikasi risiko rendah/menengah/tinggi termasuk sektor pangan." },
+  { id: "pp-40-2025", tier: "pp", year: 2025, title: "PP 40/2025 tentang Kebijakan Energi Nasional", clusters: ["kspea"], key: "Pilar energi KSPEA: mandat biodiesel B40→B50, pengembangan bioetanol dari tebu dan singkong." },
+
+  // Perpres/Keppres
+  { id: "prs-66-2021", tier: "prs", year: 2021, title: "Perpres 66/2021 tentang Badan Pangan Nasional", clusters: ["umbrella","cadangan","stabilisasi","supply","eksim"], key: "Pembentukan Bapanas sebagai regulator pangan; koordinasi ketersediaan, stabilisasi, keamanan, dan konsumsi pangan." },
+  { id: "prs-83-2017", tier: "prs", year: 2017, title: "Perpres 83/2017 tentang Kebijakan Strategis Pangan dan Gizi", clusters: ["umbrella"], key: "Peta jalan strategi pangan dan gizi jangka menengah; koordinasi lintas K/L." },
+  { id: "prs-12-2025", tier: "prs", year: 2025, title: "Perpres 12/2025 tentang RPJMN 2025-2029", clusters: ["umbrella","kspea"], key: "Asta Cita: kedaulatan pangan, energi, dan air sebagai prioritas nasional." },
+  { id: "prs-59-2019", tier: "prs", year: 2019, title: "Perpres 59/2019 tentang Pengendalian Alih Fungsi Lahan Sawah", clusters: ["lahan"], key: "Tim koordinasi lintas K/L pengendalian alih fungsi; peta lahan sawah dilindungi." },
+  { id: "prs-15-2011", tier: "prs", year: 2011, title: "Perpres 15/2011 tentang Pupuk Bersubsidi", clusters: ["pupuk"], key: "Penetapan pupuk bersubsidi sebagai barang dalam pengawasan; dasar untuk skema HET dan alokasi tahunan." },
+  { id: "prs-125-2022", tier: "prs", year: 2022, title: "Perpres 125/2022 tentang Penyelenggaraan Cadangan Pangan Pemerintah", clusters: ["cadangan"], key: "CPP untuk 11 komoditas: beras, jagung, kedelai, bawang, cabai, unggas, telur, ruminansia, gula, minyak goreng, ikan." },
+  { id: "prs-48-2016", tier: "prs", year: 2016, title: "Perpres 48/2016 jo. Perpres 20/2017 tentang Penugasan Perum BULOG", clusters: ["cadangan","stabilisasi"], key: "Penugasan BULOG untuk pengadaan, pengelolaan stok, dan stabilisasi harga beras dan komoditas lain." },
+  { id: "prs-46-2020", tier: "prs", year: 2020, title: "Perpres 46/2020 tentang ASEAN+3 Emergency Rice Reserve (APTERR)", clusters: ["cadangan","eksim"], key: "Pengesahan protokol cadangan beras darurat kawasan; kontribusi Indonesia dalam skema regional." },
+  { id: "prs-71-2015", tier: "prs", year: 2015, title: "Perpres 71/2015 tentang Barang Kebutuhan Pokok dan Barang Penting", clusters: ["stabilisasi","supply"], key: "Daftar barang kebutuhan pokok dan penting; mekanisme intervensi harga saat gejolak." },
+  { id: "prs-32-2022", tier: "prs", year: 2022, title: "Perpres 32/2022 tentang Neraca Komoditas", clusters: ["eksim","stabilisasi"], key: "Instrumen tunggal penetapan kuota ekspor-impor; menggantikan mekanisme rekomendasi sektoral." },
+  { id: "prs-14-2026", tier: "prs", year: 2026, title: "Perpres 14/2026 tentang Percepatan Infrastruktur Pascapanen", clusters: ["pascapanen","supply"], key: "Percepatan penyediaan gudang, pengeringan, penggilingan; sinergi pusat-daerah untuk perizinan dan lahan." },
+  { id: "kep-19-2025", tier: "prs", year: 2025, title: "Keppres 19/2025 tentang Tim Koordinasi Percepatan KSPEA", clusters: ["kspea"], key: "Tim koordinasi 27 K/L; Menko Pangan sebagai Ketua Otorita; monitoring dan evaluasi KSPEA." },
+  { id: "kep-atr-446-2024", tier: "prs", year: 2024, title: "Kepmen ATR/BPN 446.1/SK-PG.03.03/V/2024", clusters: ["lahan"], key: "Penetapan Luas Baku Sawah Nasional 2024: 7.384.341 ha (turun dari 7,4 juta ha)." },
+
+  // Inpres
+  { id: "inp-2-2025", tier: "inp", year: 2025, title: "Inpres 2/2025 tentang Percepatan Pembangunan dan Rehabilitasi Jaringan Irigasi", clusters: ["infra","lahan"], key: "Percepatan pembangunan, peningkatan, rehabilitasi, dan O&M jaringan irigasi untuk mendukung swasembada. Realisasi 589.605 ha (2025)." },
+  { id: "inp-10-2025", tier: "inp", year: 2025, title: "Inpres 10/2025 tentang Pengadaan dan Pengelolaan Jagung Dalam Negeri", clusters: ["cadangan","stabilisasi"], key: "Penugasan BULOG untuk serapan 1 juta ton jagung pipilan kering; harga acuan dan cadangan jagung pemerintah." },
+  { id: "inp-14-2025", tier: "inp", year: 2025, title: "Inpres 14/2025 tentang Percepatan KSPEA", clusters: ["kspea","lahan","infra"], key: "Percepatan pembangunan Kawasan Swasembada Pangan, Energi, dan Air Nasional; fokus di Wanam Merauke 1 juta ha." },
+  { id: "inp-2-2026", tier: "inp", year: 2026, title: "Inpres 2/2026 tentang Percepatan Swasembada Bidang Pangan", clusters: ["umbrella"], key: "Instruksi komprehensif percepatan swasembada; penugasan lintas K/L untuk periode 2026-2029." },
+  { id: "inp-3-2026", tier: "inp", year: 2026, title: "Inpres 3/2026 tentang Pengadaan Jagung dan Cadangan Jagung 2026-2029", clusters: ["cadangan"], key: "Kelanjutan Inpres 10/2025; penguatan Cadangan Jagung Pemerintah multi-tahun." },
+  { id: "inp-4-2026", tier: "inp", year: 2026, title: "Inpres 4/2026 tentang HPP Gabah", clusters: ["stabilisasi","cadangan"], key: "HPP gabah kering panen Rp6.500/kg (naik dari Rp5.500) untuk merangsang penyerapan domestik BULOG." },
+  { id: "inp-8-2011", tier: "inp", year: 2011, title: "Inpres 8/2011 tentang Cadangan Beras Menghadapi Iklim Ekstrim", clusters: ["cadangan"], key: "Instruksi pengelolaan cadangan beras sebagai antisipasi kondisi iklim ekstrem (banjir, kekeringan)." },
+  { id: "inp-5-2015", tier: "inp", year: 2015, title: "Inpres 5/2015 tentang Kebijakan Pengadaan Gabah/Beras dan Penyaluran Beras oleh Pemerintah", clusters: ["stabilisasi","cadangan"], key: "Kerangka HPP gabah dan skema penyaluran beras oleh BULOG (pendahulu Inpres 4/2026)." },
+
+  // Teknis
+  { id: "tek-644-2024", tier: "tek", year: 2024, title: "Kepmentan 644/KPTS/SR.310/M/11/2024", clusters: ["pupuk"], key: "Alokasi dan HET pupuk bersubsidi 2025 (versi awal): 9,55 juta ton, Rp46,8 T." },
+  { id: "tek-800-2025", tier: "tek", year: 2025, title: "Kepmentan 800/KPTS./SR.310/M/09/2025", clusters: ["pupuk"], key: "Revisi jenis, HET, dan alokasi pupuk bersubsidi 2025 menjelang penurunan HET Oktober." },
+  { id: "tek-1117-2025", tier: "tek", year: 2025, title: "Kepmentan 1117/Kpts./SR.310/M/10/2025", clusters: ["pupuk"], key: "Penurunan HET pupuk 20% per 22 Oktober 2025 tanpa tambahan APBN, via efisiensi industri Rp10 T." },
+  { id: "tek-perbadan-12-2022", tier: "tek", year: 2022, title: "Perbadan Pangan 12/2022 tentang Cadangan Beras Pemerintah", clusters: ["cadangan"], key: "Juknis pengelolaan CBP; target stok, mutu, dan reprocessing." },
+  { id: "tek-perbadan-13-2022", tier: "tek", year: 2022, title: "Perbadan Pangan 13/2022 tentang Cadangan Jagung Pemerintah", clusters: ["cadangan"], key: "Juknis pengelolaan CJP untuk peternak layer dan broiler mandiri." },
+  { id: "tek-perbadan-14-2022", tier: "tek", year: 2022, title: "Perbadan Pangan 14/2022 tentang Cadangan Kedelai Pemerintah", clusters: ["cadangan"], key: "Juknis pengelolaan CKP untuk pengrajin tahu dan tempe." },
+  { id: "tek-perbadan-15-2022", tier: "tek", year: 2022, title: "Perbadan Pangan 15/2022 tentang SPHP Beras, Jagung, Kedelai", clusters: ["stabilisasi"], key: "Kerangka Stabilisasi Pasokan dan Harga Pangan (SPHP); harga jual eceran sesuai HET." },
+  { id: "tek-perbadan-11-2022", tier: "tek", year: 2022, title: "Perbadan Pangan 11/2022 tentang HAP Komoditas Strategis", clusters: ["stabilisasi"], key: "Harga Acuan Pembelian di tingkat produsen dan Harga Acuan Penjualan di tingkat konsumen (kedelai, bawang, cabai, gula, daging)." },
+  { id: "tek-perbadan-34-2026", tier: "tek", year: 2026, title: "Kepbadan Pangan 34/2026 tentang Juknis SPHP Beras 2026", clusters: ["stabilisasi"], key: "Juknis SPHP Beras tahun 2026; kemasan 2 kg dan 5 kg; target 828.000 ton dengan subsidi Rp4,97 T." },
+  { id: "tek-permen-pu-14-2015", tier: "tek", year: 2015, title: "Permen PU 14/2015 tentang P3-TGAI", clusters: ["infra"], key: "Program Percepatan Peningkatan Tata Guna Air Irigasi berbasis pemberdayaan kelompok masyarakat." },
+  { id: "tek-pmk-84-2025", tier: "tek", year: 2025, title: "PMK 84/2025 tentang Rekening Penampungan Akhir Tahun Anggaran (RPATA)", clusters: ["supply","stabilisasi"], key: "Mekanisme fiskal untuk kontinuitas SPHP lintas tahun anggaran; memungkinkan perpanjangan SPHP beras 2025 hingga Januari 2026." },
+];
+
+const TOP_REGS = ["inp-14-2025","prs-14-2026","inp-4-2026","inp-2-2026","kep-19-2025","tek-1117-2025","inp-2-2025","prs-125-2022","prs-32-2022","inp-3-2026"];
+
+const SINERGI = [
+  { link: "Lahan ↔ Irigasi", title: "Cetak sawah dan jaringan irigasi", desc: "UU 41/2009 LP2B memastikan luas baku sawah 7,38 juta ha, sementara Inpres 2/2025 Irigasi mempercepat penyediaan air. Kombinasi ini menjadi tulang punggung ekstensifikasi. Realisasi paralel: 225.000 ha cetak sawah + 589.605 ha rehabilitasi irigasi pada 2025." },
+  { link: "Benih + Pupuk + Alsintan", title: "Paket produksi terpadu via Brigade Pangan", desc: "UU 22/2019 SBPB sebagai payung, diturunkan lewat Kepmentan tahunan untuk masing-masing input. Brigade Pangan menjadi platform integrasi lapangan: 1 unit menerima paket benih (25-30 kg/ha), pupuk (eRDKK), dan alsintan (TR4, TR2, drone, combine)." },
+  { link: "CPP ↔ Stabilisasi ↔ Ekspor-Impor", title: "Rantai HPP-Serapan-SPHP-HET-Neraca Komoditas", desc: "Perpres 125/2022 CPP + Inpres 4/2026 HPP Rp6.500 + Perbadan 15/2022 SPHP + Perpres 32/2022 Neraca Komoditas membentuk mekanisme lengkap: BULOG serap gabah dengan HPP → CBP 5,3 juta ton → SPHP salur ke konsumen dengan HET → cadangan mencukupi sehingga impor nol pada 2025-2026." },
+  { link: "Pascapanen ↔ Supply Chain", title: "Perpres 14/2026 sebagai penghubung", desc: "Perpres 14/2026 Infrastruktur Pascapanen langsung menghubungkan sisi produksi (dryer, RMU, silo) dengan sisi distribusi (gudang BULOG, cold chain, terminal agro). Kunci untuk menekan susut panen 12-15% menjadi <8%." },
+  { link: "KSPEA sebagai payung integrasi", title: "Inpres 14/2025 + Keppres 19/2025 + PP 40/2025", desc: "KSPEA menyatukan tiga pilar dalam satu kawasan geografis (Wanam 1 juta ha): pangan (cetak sawah), energi (biodiesel dari sawit, bioetanol dari tebu), dan air (irigasi rawa). Tim Koordinasi 27 K/L dipimpin Menko Pangan menjadi mekanisme sinkronisasi." },
+  { link: "Bapanas sebagai simpul horizontal", title: "Perpres 66/2021 memayungi CPP, stabilisasi, dan distribusi", desc: "Bapanas menjadi regulator tunggal yang menautkan Perpres 125/2022 (CPP), Perpres 71/2015 (barang pokok), Perpres 32/2022 (Neraca Komoditas), dan Perbadan operasional. Reformasi kelembagaan yang menggantikan koordinasi ad-hoc sebelumnya." },
+  { link: "UU + PP sebagai fondasi bersama", title: "UU 18/2012 dan PP 17/2015 memayungi semua klaster", desc: "UU 18/2012 mendefinisikan tiga pilar ketahanan pangan (ketersediaan, keterjangkauan, pemanfaatan) yang menjadi rujukan lintas klaster. PP 17/2015 operasionalisasi UU 18 mencakup kelembagaan pusat-daerah, cadangan, cadangan, dan stabilisasi." },
+];
+
+const GAP = [
+  { link: "Klaster 7 - Penyuluh", title: "UU 16/2006 belum diperbarui pasca sentralisasi", desc: "UU 16/2006 tidak mengatur skema PPPK penyuluh yang menjadi solusi utama percepatan rekrutmen. Perpres penarikan kewenangan PPL ke pusat menciptakan tegangan dengan UU 23/2014 Pemda. Diperlukan revisi UU atau Perpres cleer-cut sebagai jembatan." },
+  { link: "Klaster 4 - Alsintan", title: "Belum ada UU atau PP khusus alsintan", desc: "Bantuan alsintan bergantung pada Permentan dan Kepmentan tahunan. Rentan diskontinuitas antar rezim politik. Standar nasional model kepemilikan alsintan (kolektif Brigade Pangan vs Brigade Alsintan dinas) belum baku." },
+  { link: "Lintas klaster - Data terintegrasi", title: "Single Farmer ID belum berpayung hukum", desc: "eRDKK (pupuk), e-Katalog (benih), simluhtan (penyuluh), daftar Brigade Pangan, dan daftar penerima alsintan berjalan terpisah. Belum ada Perpres atau Perbadan yang mewajibkan integrasi data petani penerima manfaat lintas program." },
+  { link: "Lintas klaster - Adaptasi iklim", title: "Sistem manajemen risiko iklim pertanian belum sistematis", desc: "Inpres 8/2011 (cadangan beras menghadapi iklim ekstrim) sudah usang. Belum ada Perpres komprehensif yang mengintegrasikan peringatan dini BMKG-Kementan, Katam Terpadu, AUTP, dan stockpile benih emergency. Padahal El Niño 2026 diprakirakan 50-80% probabilitas (BMKG)." },
+  { link: "Klaster 1 - Lahan (LP2B)", title: "Implementasi UU 41/2009 lemah di daerah", desc: "Sebagian besar provinsi belum memasukkan LP2B ke dalam RTRW. Peta LP2B belum lengkap. Sanksi alih fungsi lahan sawah jarang ditegakkan. Konversi lahan sawah tetap berlangsung 90-100 ribu ha/tahun." },
+  { link: "Lintas klaster - Asuransi", title: "AUTP hanya berlandaskan Permentan/Kepmentan", desc: "Asuransi Usaha Tani Padi belum memiliki payung setingkat PP atau Perpres. Cakupan hanya <10% luas tanam. Premi ditanggung APBN tetapi klaim Rp6 juta/ha jauh di bawah biaya usaha tani Rp8-12 juta/ha." },
+  { link: "Klaster 12 - KSPEA", title: "FPIC masyarakat adat belum eksplisit di Inpres 14/2025", desc: "Inpres 14/2025 menugaskan Kemhan (pengamanan) dan Pindad (industri pertahanan), namun tidak eksplisit mengatur Free, Prior, and Informed Consent (FPIC) untuk masyarakat adat Marind di Wanam. Berisiko mengulang kegagalan food estate era sebelumnya." },
+  { link: "Klaster 2 - Benih", title: "PP 44/1995 sudah 30 tahun", desc: "PP 44/1995 tentang Perbenihan Tanaman belum diperbarui untuk mengakomodasi teknologi benih modern (varietas GSR, salinitas, tahan iklim), sistem sertifikasi cepat (RE test), dan integrasi dengan e-Katalog. Perlu revisi PP." },
+];
+
+const TEGANGAN = [
+  { link: "Klaster 1 vs pembangunan umum", title: "LP2B (UU 41/2009) vs 3 juta rumah dan PSN", desc: "Rencana relaksasi LP2B via RPP RTRW Nasional untuk mendukung 3 juta rumah, hilirisasi, dan Proyek Strategis Nasional menciptakan tegangan langsung dengan mandat UU 41/2009. Perlu keputusan politik yang jelas: proteksi LP2B atau relaksasi terkendali." },
+  { link: "Klaster 8-9 - Regulator vs operator", title: "Bapanas (regulator) vs Kementan (operator)", desc: "Kepala Bapanas dirangkap oleh Mentan Andi Amran Sulaiman. Perpres 66/2021 mengatur Bapanas sebagai regulator independen, namun praktik perangkapan mengurangi separation of powers. Pada jangka panjang, pemisahan struktural perlu dipertimbangkan." },
+  { link: "Klaster 12 - Food vs Energy", title: "PP 40/2025 (B50, bioetanol) vs kebutuhan konsumsi", desc: "Mandat biodiesel B50 memerlukan kenaikan alokasi CPO 25% dari 2025 ke 2026 (14,2 juta KL → 17,7 juta KL), yang berkompetisi dengan pasokan minyak goreng dalam negeri. Ekspansi tebu bioetanol berkompetisi dengan tebu untuk gula konsumsi. Belum ada mekanisme prioritisasi formal." },
+  { link: "Klaster 11 - Stop impor vs komitmen internasional", title: "Neraca Komoditas 2026 vs WTO dan bilateral", desc: "Kebijakan nol impor 4 komoditas berpotensi bertentangan dengan komitmen WTO (Agreement on Agriculture) dan kerjasama bilateral (Thailand, Vietnam, India). Perpres 46/2020 ASEAN+3 juga mengasumsikan aliran perdagangan regional. Perlu mekanisme trigger impor darurat yang formal." },
+  { link: "Klaster 7 - Pusat vs Daerah", title: "Sentralisasi PPL vs UU 23/2014 Pemda", desc: "Penarikan kewenangan PPL ke pusat (di bawah Kementan) berbenturan dengan UU 23/2014 tentang Pemerintahan Daerah yang membagi urusan pertanian pada pemda. Perlu revisi UU atau Perpres yang clear-cut untuk menghindari ambiguitas hukum di lapangan." },
+  { link: "Klaster umum - Inpres vs UU/PP", title: "Instrumen Inpres cepat vs proses UU/PP formal", desc: "Prabowo mengeluarkan rangkaian Inpres (2/2025, 10/2025, 14/2025, 2/2026, 3/2026, 4/2026) sebagai instrumen percepatan. Namun Inpres bersifat internal eksekutif dan tidak mengikat luar kabinet. Bila tidak diturunkan ke UU/PP, keberlanjutan lintas rezim politik rentan." },
+  { link: "Klaster 5 vs 8 - Infrastruktur pascapanen vs gudang BULOG", title: "Perpres 14/2026 vs kapasitas eksisting BULOG", desc: "Perpres 14/2026 mempercepat pembangunan infrastruktur pascapanen (25.000 gudang baru). Namun kapasitas eksisting BULOG (3 juta ton gudang milik + 3 juta ton sewa) belum optimal digunakan pada saat CBP 5,3 juta ton. Perlu perencanaan matang agar tidak over-invest." },
+  { link: "Klaster 3 - Penurunan HET pupuk", title: "Efisiensi one-shot vs beban fiskal berkelanjutan", desc: "Penurunan HET pupuk 20% pada Oktober 2025 tanpa tambahan APBN via efisiensi industri Rp10 T bersifat one-shot. Anggaran Rp46,87 T pada 2026 tetap besar. Bila produksi domestik pupuk menurun atau harga bahan baku naik, HET rendah sulit dipertahankan tanpa tambahan subsidi." },
+];
+
+// Cluster-to-cluster relationship matrix (S = sinergi, G = gap, T = tegangan, - = netral)
+const MATRIX_CLUSTERS = ["lahan","benih","pupuk","alsintan","pascapanen","infra","penyuluh","cadangan","stabilisasi","supply","eksim","kspea"];
+const MATRIX_LABELS = ["Lahan","Benih","Pupuk","Alsintan","Pascapanen","Irigasi","Penyuluh","CPP","Stabilisasi","Supply","Ekspor-Impor","KSPEA"];
+const MATRIX = {
+  lahan:      { benih:"S", pupuk:"S", alsintan:"S", pascapanen:"-", infra:"S", penyuluh:"G", cadangan:"-", stabilisasi:"-", supply:"-", eksim:"T", kspea:"S" },
+  benih:      { pupuk:"S", alsintan:"S", pascapanen:"-", infra:"S", penyuluh:"G", cadangan:"-", stabilisasi:"-", supply:"-", eksim:"-", kspea:"S" },
+  pupuk:      { alsintan:"S", pascapanen:"-", infra:"S", penyuluh:"G", cadangan:"-", stabilisasi:"S", supply:"-", eksim:"-", kspea:"S" },
+  alsintan:   { pascapanen:"S", infra:"S", penyuluh:"G", cadangan:"-", stabilisasi:"-", supply:"-", eksim:"-", kspea:"S" },
+  pascapanen: { infra:"-", penyuluh:"G", cadangan:"S", stabilisasi:"S", supply:"S", eksim:"-", kspea:"-" },
+  infra:      { penyuluh:"-", cadangan:"-", stabilisasi:"-", supply:"-", eksim:"-", kspea:"S" },
+  penyuluh:   { cadangan:"-", stabilisasi:"-", supply:"-", eksim:"-", kspea:"G" },
+  cadangan:   { stabilisasi:"S", supply:"S", eksim:"S", kspea:"S" },
+  stabilisasi:{ supply:"S", eksim:"S", kspea:"-" },
+  supply:     { eksim:"S", kspea:"-" },
+  eksim:      { kspea:"T" },
+};
+
+const ADEQUACY = [
+  { cluster: "lahan", score: 3, tier: "UU + PP + Perpres + Teknis lengkap", strength: "Hirarki lengkap dari UU 41/2009 hingga Perpres 59/2019 dan Kepmen ATR 446.1/2024. Data spasial LP2B ada payungnya.", gap: "Implementasi lemah: banyak provinsi belum masukkan LP2B ke RTRW. Tegangan dengan rencana relaksasi via RPP RTRW untuk 3 juta rumah dan PSN. Sanksi konversi jarang ditegakkan." },
+  { cluster: "benih", score: 2, tier: "UU + PP + Teknis (tanpa Perpres/Inpres)", strength: "UU 22/2019 SBPB dan UU 29/2000 PVT menjadi payung. Sistem sertifikasi berjalan.", gap: "PP 44/1995 sudah 30 tahun—belum akomodasi varietas GSR, tahan iklim, e-Katalog. Tidak ada Perpres perbenihan nasional. Bergantung Kepmentan tahunan yang rentan diskontinuitas." },
+  { cluster: "pupuk", score: 4, tier: "Perpres + Teknis kuat", strength: "Perpres 15/2011 sebagai payung. Kepmentan tahunan detail (644/2024, 800/2025, 1117/2025). Reformasi 2025 sukses: tepat waktu 1 Januari, HET turun 20%.", gap: "Belum ada UU khusus pupuk. Alokasi belum sepenuhnya mengikuti rekomendasi spesifik lokasi. Porsi pupuk organik baru 5%." },
+  { cluster: "alsintan", score: 2, tier: "Hanya Teknis (Permentan/Kepmentan)", strength: "Skema bantuan alsintan berjalan melalui Brigade Pangan. Distribusi tercatat.", gap: "Tidak ada UU atau PP khusus alsintan. Standar nasional model kepemilikan (kolektif Brigade vs dinas) belum baku. Rentan diskontinuitas antar rezim." },
+  { cluster: "pascapanen", score: 3, tier: "UU + Perpres baru + Teknis", strength: "Perpres 14/2026 baru terbit sebagai instrumen percepatan gudang dan infrastruktur pascapanen. Menghubungkan produsen ke distribusi.", gap: "Perpres 14/2026 baru diterbitkan April 2026—peraturan teknis pelaksana belum lengkap. Kapasitas dryer dan RMU di luar Jawa masih kurang. Standar susut panen belum baku." },
+  { cluster: "infra", score: 4, tier: "UU + PP + Inpres + Teknis", strength: "UU 17/2019 SDA, PP 121/2015, Inpres 2/2025 komprehensif. Realisasi 589.605 ha (2025) → target 750.000 ha (2026). Koordinasi PU-Kementan membaik.", gap: "Anggaran O&M jaringan tersier rawan kurang (bergantung APBD). P3A/GP3A banyak yang tidak aktif. Sinkronisasi jadwal irigasi tersier dengan cetak sawah belum optimal." },
+  { cluster: "penyuluh", score: 1, tier: "UU (usang) + PP + Perpres (belum jelas)", strength: "UU 16/2006 dan PP 43/2009 sebagai payung dasar.", gap: "UU 16/2006 belum diperbarui—tidak akomodasi PPPK penyuluh dan integrasi Brigade Pangan. Perpres penarikan kewenangan PPL ke pusat berbenturan dengan UU 23/2014 Pemda. Gap 45.000 penyuluh dari kebutuhan 83.000. Krisis demografi: separuh mendekati pensiun." },
+  { cluster: "cadangan", score: 5, tier: "UU + PP + Perpres + Inpres + Teknis lengkap", strength: "Kerangka paling lengkap: UU 18/2012, Perpres 125/2022 CPP, Perpres 48/2016 & 20/2017 BULOG, Perbadan 12-14/2022, Inpres 3/2026 jagung. CBP 5,3 juta ton—tertinggi sepanjang sejarah.", gap: "Revisi Perpres 125/2022 masih dibahas. Kapasitas gudang mendekati limit. Belum ada mekanisme trigger formal untuk aktivasi cadangan darurat." },
+  { cluster: "stabilisasi", score: 4, tier: "Perpres + Inpres + Perbadan kuat", strength: "Perpres 71/2015, Inpres 4/2026 HPP Rp6.500, Perbadan 15/2022 SPHP, Perbadan 34/2026. Inflasi pangan terkendali 2,92% pada 2025.", gap: "SPHP terbatas pada beras, jagung, kedelai—belum mencakup pangan lokal (sagu, sorgum). Stabilisasi komoditas perishable (cabai, bawang) masih lemah. Perangkapan Kepala Bapanas oleh Mentan mengurangi separation of powers." },
+  { cluster: "supply", score: 3, tier: "UU + PP + Perpres + Teknis parsial", strength: "UU 7/2014, Perpres 71/2015, Perpres 14/2026, PMK 84/2025 RPATA. FDP dan GPM berjalan.", gap: "Rantai pasok terfragmentasi antara Bapanas, BULOG, Kementan, Kemendag. Belum ada payung tunggal supply chain pangan. Cold chain masih terbatas. Kios Pangan belum masif." },
+  { cluster: "eksim", score: 3, tier: "UU + PP + Perpres kuat", strength: "UU 7/2014, Perpres 32/2022 Neraca Komoditas, PP 5/2021 OSS-RBA. Nol impor 4 komoditas pokok berhasil 2025-2026.", gap: "Belum ada mekanisme trigger formal impor darurat. Potensi konflik dengan komitmen WTO dan bilateral. Perpres 46/2020 ASEAN+3 mengasumsikan aliran perdagangan yang tidak konsisten dengan nol impor." },
+  { cluster: "kspea", score: 2, tier: "Inpres + Keppres + PP baru", strength: "Inpres 14/2025 dan Keppres 19/2025 mengatur koordinasi 27 K/L. PP 40/2025 memayungi pilar energi.", gap: "Belum ada UU atau PP khusus KSPEA. Bergantung Inpres yang rentan perubahan rezim. FPIC untuk masyarakat adat Marind belum eksplisit. Belum ada Badan Otorita setingkat IKN. Tim Koordinasi 27 K/L rawan bottleneck." },
+];
+
+const GAP_PRIORITY = [
+  { title: "Revisi UU 16/2006 Sistem Penyuluhan", cluster: "Penyuluh", priority: "tinggi", desc: "UU sudah 20 tahun dan tidak mengakomodasi <strong>skema PPPK penyuluh, integrasi Brigade Pangan, sentralisasi kewenangan ke pusat, dan digitalisasi penyuluhan (cyber extension)</strong>. Menjadi hambatan struktural terbesar—gap 45.000 penyuluh tidak akan tertutup tanpa revisi ini. Rekomendasi: revisi UU dengan pengaturan clear-cut kewenangan pusat-daerah (harmonisasi dengan UU 23/2014)." },
+  { title: "Perpres atau PP tentang Alsintan Pertanian", cluster: "Alsintan", priority: "tinggi", desc: "Belum ada UU atau PP khusus. Bantuan alsintan berjalan hanya dengan payung Permentan/Kepmentan tahunan. Perlu <strong>Perpres atau PP tentang Alsintan Pertanian</strong> yang mengatur: standar nasional, model kepemilikan (Brigade Pangan vs UPJA), pemeliharaan, dan pembiayaan berkelanjutan. Model bisa merujuk Perpres 15/2011 Pupuk Bersubsidi." },
+  { title: "Perpres Single Farmer ID (Satu Data Petani)", cluster: "Lintas klaster", priority: "tinggi", desc: "eRDKK, e-Katalog, simluhtan, daftar Brigade Pangan, dan daftar PBP berjalan terpisah. Perlu <strong>Perpres Single Farmer ID</strong> yang mewajibkan integrasi data petani penerima manfaat lintas program. Bisa menggunakan model Perpres 39/2019 Satu Data Indonesia. Bapanas atau Kementan sebagai walidata sektor pangan." },
+  { title: "Perpres Sistem Manajemen Risiko Iklim Pertanian", cluster: "Adaptasi iklim", priority: "tinggi", desc: "Inpres 8/2011 sudah 15 tahun dan tidak komprehensif. Perlu Perpres baru yang mengintegrasikan <strong>peringatan dini BMKG-Kementan, Katam Terpadu digital, AUTP diperluas ke 30% luas tanam, stockpile benih emergency, dan protokol respons banjir-kekeringan</strong>. Urgen mengingat probabilitas El Niño 2026 mencapai 50-80%." },
+  { title: "Revisi PP 44/1995 Perbenihan Tanaman", cluster: "Benih", priority: "sedang", desc: "PP sudah 30 tahun. Perlu revisi untuk mengakomodasi <strong>varietas modern (GSR, tahan salinitas, tahan iklim), sistem sertifikasi cepat (RE test), integrasi dengan e-Katalog, dan pemberdayaan produsen benih lokal (Program MANTAP)</strong>. Sinkronisasi dengan UU 22/2019 SBPB perlu ditegaskan." },
+  { title: "UU atau PP tentang KSPEA", cluster: "KSPEA", priority: "sedang", desc: "Inpres 14/2025 dan Keppres 19/2025 rentan perubahan rezim politik. Untuk keberlanjutan investasi Rp50-80 T di Wanam, perlu <strong>UU atau PP khusus KSPEA</strong> yang menetapkan Badan Otorita setingkat IKN, mengatur FPIC untuk masyarakat adat Marind, dan menetapkan mekanisme stop-go pada setiap milestone." },
+  { title: "Penguatan implementasi UU 41/2009 LP2B", cluster: "Lahan", priority: "sedang", desc: "Payung hukum kuat namun implementasi lemah. Perlu <strong>Perpres percepatan integrasi LP2B ke RTRW provinsi/kabupaten</strong> dengan insentif fiskal (DAK khusus LP2B) untuk pemda yang mempertahankan dan disinsentif tegas untuk pemda yang menoleransi konversi. Sinkronisasi dengan RPP RTRW Nasional (untuk 3 juta rumah)." },
+  { title: "PP tentang Asuransi Usaha Tani", cluster: "AUTP", priority: "sedang", desc: "AUTP hanya berpayung Permentan dan Kepmentan. Perlu <strong>PP tentang Asuransi Pertanian</strong> yang menetapkan cakupan minimal 30% luas tanam pada 2027, klaim naik ke Rp9-10 juta/ha (setara biaya usaha tani), dan proses klaim < 30 hari." },
+  { title: "Perpres Terminal Agro dan Cold Chain Nasional", cluster: "Supply", priority: "sedang", desc: "Perpres 14/2026 fokus pada infrastruktur pascapanen dasar (dryer, gudang). Belum ada payung untuk <strong>terminal agro modern dan cold chain nasional</strong> yang diperlukan untuk stabilisasi komoditas perishable (cabai, bawang, hortikultura)." },
+  { title: "Mekanisme trigger impor darurat", cluster: "Ekspor-Impor", priority: "rendah", desc: "Kebijakan nol impor perlu dilengkapi <strong>mekanisme trigger formal</strong>: bila stok CBP < 2 juta ton ATAU harga beras > 1,5× HET selama 4 minggu, impor selektif dipertimbangkan dengan persetujuan Rakortas tingkat menteri. Bisa masuk revisi Perpres 32/2022 Neraca Komoditas." },
+];
+
+const REKOMENDASI = [
+  { title: "Prioritas 2026: Terbitkan 3 Perpres integratif", desc: "Perpres Single Farmer ID, Perpres Sistem Manajemen Risiko Iklim Pertanian, dan Perpres Alsintan Pertanian. Ketiganya menutup gap paling kritikal dan bisa diterbitkan dalam 12 bulan karena tidak memerlukan proses legislasi.", tags: ["Cepat","Perpres","2026"] },
+  { title: "Prioritas 2026-2027: Revisi UU 16/2006 Penyuluhan", desc: "Revisi UU sistem penyuluhan menjadi kunci mengatasi gap 45.000 penyuluh. Perlu masuk Prolegnas 2026 dengan target pengesahan sebelum akhir 2027. Sinkronisasi dengan UU 23/2014 Pemda mutlak.", tags: ["UU","Prolegnas","Penyuluh"] },
+  { title: "Prioritas 2027: Revisi PP 44/1995 Perbenihan", desc: "PP baru perbenihan yang mengakomodasi teknologi modern, sertifikasi cepat, dan pemberdayaan produsen benih lokal. Sinkron dengan UU 22/2019 SBPB.", tags: ["PP","Benih","2027"] },
+  { title: "Konsolidasi Perpres 125/2022 CPP dan Perpres 71/2015", desc: "Kedua Perpres mengatur cadangan dan stabilisasi harga secara terpisah. Konsolidasi menjadi satu Perpres 'Ketersediaan dan Stabilisasi Pangan Nasional' akan mempermudah koordinasi dan menghindari tumpang tindih.", tags: ["Konsolidasi","Perpres"] },
+  { title: "Pemisahan struktural Bapanas dan Kementan", desc: "Kepala Bapanas idealnya tidak merangkap Menteri Pertanian. Perlu revisi Perpres 66/2021 untuk memperjelas independensi Bapanas sebagai regulator, sementara Kementan tetap sebagai operator sektor.", tags: ["Kelembagaan","Perpres 66/2021"] },
+  { title: "Naikkan Inpres 14/2025 KSPEA menjadi UU atau PP", desc: "Untuk keberlanjutan lintas rezim, investasi KSPEA Rp50-80 T perlu payung setingkat UU atau PP dengan Badan Otorita permanen. Mengingat sensitivitas isu masyarakat adat, harus disertai FPIC eksplisit.", tags: ["KSPEA","UU/PP","Multi-tahun"] },
+  { title: "Penguatan implementasi UU 41/2009 LP2B", desc: "Perpres percepatan integrasi LP2B ke RTRW dengan mekanisme insentif-disinsentif fiskal. Wajib diselaraskan dengan RPP RTRW Nasional untuk mencegah relaksasi tanpa mitigasi.", tags: ["Lahan","LP2B","Fiskal"] },
+  { title: "PP Asuransi Pertanian", desc: "Meningkatkan cakupan AUTP dari <10% menjadi 30% luas tanam pada 2027, dengan klaim setara biaya usaha tani dan percepatan proses klaim.", tags: ["PP","AUTP","2027"] },
+];
+
+// === RENDERING ===
+function tierCounts() {
+  const counts = { uu:0, pp:0, prs:0, inp:0, tek:0 };
+  REGULATIONS.forEach(r => counts[r.tier]++);
+  return counts;
+}
+
+function renderKPI() {
+  const counts = tierCounts();
+  const total = REGULATIONS.length;
+  const el = document.getElementById("kpi-grid");
+  el.innerHTML = `
+    <div class="kpi">
+      <p class="kpi-label">Total peraturan</p>
+      <p class="kpi-value">${total}</p>
+      <p class="kpi-sub">Terdaftar dalam dashboard</p>
+      <div class="tier-strip">
+        <span class="tier-uu" style="flex:${counts.uu}"></span>
+        <span class="tier-pp" style="flex:${counts.pp}"></span>
+        <span class="tier-prs" style="flex:${counts.prs}"></span>
+        <span class="tier-inp" style="flex:${counts.inp}"></span>
+        <span class="tier-tek" style="flex:${counts.tek}"></span>
+      </div>
+    </div>
+    <div class="kpi"><p class="kpi-label">Undang-Undang</p><p class="kpi-value">${counts.uu}</p><p class="kpi-sub">Landasan hukum tertinggi</p></div>
+    <div class="kpi"><p class="kpi-label">Peraturan Pemerintah</p><p class="kpi-value">${counts.pp}</p><p class="kpi-sub">Pelaksana UU</p></div>
+    <div class="kpi"><p class="kpi-label">Perpres / Keppres</p><p class="kpi-value">${counts.prs}</p><p class="kpi-sub">Termasuk Perpres 14/2026</p></div>
+    <div class="kpi"><p class="kpi-label">Inpres</p><p class="kpi-value">${counts.inp}</p><p class="kpi-sub">Instrumen presidensial cepat</p></div>
+    <div class="kpi"><p class="kpi-label">Peraturan teknis</p><p class="kpi-value">${counts.tek}</p><p class="kpi-sub">Permen, Perbadan, Kepmen</p></div>
+  `;
+}
+
+function clusterName(id) {
+  const c = CLUSTERS.find(x => x.id === id);
+  return c ? c.name : id;
+}
+
+function renderClusters(filter = "", activeTiers = null) {
+  const grid = document.getElementById("cluster-grid");
+  const q = filter.toLowerCase().trim();
+  const tiers = activeTiers || new Set(TIER_ORDER);
+  grid.innerHTML = "";
+
+  CLUSTERS.forEach(cluster => {
+    const regs = REGULATIONS.filter(r =>
+      r.clusters.includes(cluster.id) &&
+      tiers.has(r.tier) &&
+      (q === "" || r.title.toLowerCase().includes(q) || r.key.toLowerCase().includes(q) || cluster.name.toLowerCase().includes(q))
+    );
+    if (regs.length === 0 && q !== "") return;
+
+    const sortedRegs = [...regs].sort((a, b) => {
+      const ta = TIER_ORDER.indexOf(a.tier);
+      const tb = TIER_ORDER.indexOf(b.tier);
+      if (ta !== tb) return ta - tb;
+      return b.year - a.year;
+    });
+
+    const isUmbrella = cluster.id === "umbrella";
+    const num = isUmbrella ? "★" : CLUSTERS.findIndex(c => c.id === cluster.id);
+
+    const card = document.createElement("div");
+    card.className = "cluster-card" + (isUmbrella ? "" : " collapsed");
+    card.innerHTML = `
+      <div class="cluster-head" onclick="this.parentElement.classList.toggle('collapsed')">
+        <span class="cluster-num">${num}</span>
+        <div class="cluster-title">
+          <p class="cluster-name">${cluster.name}</p>
+          <p class="cluster-count">${regs.length} peraturan</p>
+        </div>
+        <span class="chev">▾</span>
+      </div>
+      <div class="cluster-body">
+        <p class="cluster-desc">${cluster.desc}</p>
+        ${sortedRegs.map(r => `
+          <div class="reg-item">
+            <div class="reg-row">
+              <span class="tier-badge ${r.tier}">${TIER_LABELS[r.tier]}</span>
+              <p class="reg-label">${r.title}</p>
+            </div>
+            <p class="reg-key">${r.key}</p>
+            ${r.clusters.length > 1 ? `<div class="cluster-tags">${r.clusters.filter(cid => cid !== cluster.id && cid !== "umbrella").slice(0,4).map(cid => `<span class="tag">${clusterName(cid)}</span>`).join("")}</div>` : ""}
+          </div>
+        `).join("")}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  if (grid.children.length === 0) {
+    grid.innerHTML = '<p class="empty">Tidak ada peraturan yang sesuai filter</p>';
+  }
+}
+
+function renderAllRegulations(filter = "", activeTiers = null) {
+  const list = document.getElementById("all-regulations");
+  const q = filter.toLowerCase().trim();
+  const tiers = activeTiers || new Set(TIER_ORDER);
+  const filtered = REGULATIONS.filter(r =>
+    tiers.has(r.tier) &&
+    (q === "" || r.title.toLowerCase().includes(q) || r.key.toLowerCase().includes(q))
+  ).sort((a, b) => {
+    const ta = TIER_ORDER.indexOf(a.tier);
+    const tb = TIER_ORDER.indexOf(b.tier);
+    if (ta !== tb) return ta - tb;
+    return b.year - a.year;
+  });
+
+  list.innerHTML = filtered.length === 0
+    ? '<p class="empty">Tidak ada peraturan yang sesuai</p>'
+    : filtered.map(r => `
+      <div class="peraturan-item">
+        <div class="peraturan-head">
+          <span class="tier-badge ${r.tier}">${TIER_LABELS[r.tier]}</span>
+          <p class="peraturan-name">${r.title}</p>
+          <span class="reg-year">${r.year}</span>
+        </div>
+        <p class="peraturan-key">${r.key}</p>
+        <div class="cluster-tags" style="margin: 8px 0 0 0;">${r.clusters.filter(cid => cid !== "umbrella").map(cid => `<span class="tag">${clusterName(cid)}</span>`).join("")}</div>
+      </div>
+    `).join("");
+}
+
+function renderTopRegulations() {
+  const list = document.getElementById("top-regulations");
+  list.innerHTML = TOP_REGS.map(id => {
+    const r = REGULATIONS.find(x => x.id === id);
+    if (!r) return "";
+    return `
+      <div class="peraturan-item">
+        <div class="peraturan-head">
+          <span class="tier-badge ${r.tier}">${TIER_LABELS[r.tier]}</span>
+          <p class="peraturan-name">${r.title}</p>
+          <span class="reg-year">${r.year}</span>
+        </div>
+        <p class="peraturan-key">${r.key}</p>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderTimeline() {
+  const tl = document.getElementById("timeline");
+  const byYear = {};
+  REGULATIONS.forEach(r => {
+    if (!byYear[r.year]) byYear[r.year] = [];
+    byYear[r.year].push(r);
+  });
+  const years = Object.keys(byYear).map(Number).sort((a,b) => b - a);
+
+  tl.innerHTML = years.map(year => `
+    <div class="timeline-year">
+      <span class="timeline-year-label">${String(year).slice(-2)}</span>
+      <p class="timeline-year-title">${year}</p>
+      <div class="timeline-items">
+        ${byYear[year].sort((a,b) => TIER_ORDER.indexOf(a.tier) - TIER_ORDER.indexOf(b.tier)).map(r => `
+          <div class="timeline-item">
+            <span class="tier-badge ${r.tier}">${TIER_LABELS[r.tier]}</span>
+            <div>
+              <strong>${r.title}</strong><br>
+              <span style="color: var(--text-2); font-size: 12px;">${r.key}</span>
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderCoherenceCards() {
+  const renderList = (items, elId, cls) => {
+    document.getElementById(elId).innerHTML = items.map(item => `
+      <div class="coherence-card ${cls}">
+        <p class="coherence-link">${item.link}</p>
+        <h4>${item.title}</h4>
+        <p>${item.desc}</p>
+      </div>
+    `).join("");
+  };
+  renderList(SINERGI, "sinergi-list", "sinergi");
+  renderList(GAP, "gap-list", "gap");
+  renderList(TEGANGAN, "tegangan-list", "tegangan");
+}
+
+function renderMatrix() {
+  const box = document.getElementById("matrix");
+  let html = '<table class="matrix"><thead><tr><th class="row">Klaster</th>';
+  MATRIX_LABELS.forEach((lbl, i) => {
+    html += `<th title="${lbl}">${i+1}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  MATRIX_CLUSTERS.forEach((row, i) => {
+    html += `<tr><th class="row">${i+1}. ${MATRIX_LABELS[i]}</th>`;
+    MATRIX_CLUSTERS.forEach((col, j) => {
+      if (i === j) {
+        html += '<td class="m-self">·</td>';
+      } else {
+        const [a, b] = i < j ? [row, col] : [col, row];
+        const v = (MATRIX[a] && MATRIX[a][b]) || "-";
+        let cls = "m-x", txt = "";
+        if (v === "S") { cls = "m-s"; txt = "S"; }
+        else if (v === "G") { cls = "m-g"; txt = "G"; }
+        else if (v === "T") { cls = "m-t"; txt = "T"; }
+        else { txt = "·"; }
+        html += `<td class="${cls}">${txt}</td>`;
+      }
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  box.innerHTML = html;
+}
+
+function renderAdequacy() {
+  const grid = document.getElementById("adequacy-grid");
+  grid.innerHTML = ADEQUACY.map(a => {
+    const cluster = CLUSTERS.find(c => c.id === a.cluster);
+    const idx = CLUSTERS.findIndex(c => c.id === a.cluster);
+    const bars = [1,2,3,4,5].map(i => `<span class="${i <= a.score ? 'on' : ''}"></span>`).join("");
+    const scoreLabel = a.score <= 2 ? "Kurang" : (a.score === 3 ? "Cukup" : "Memadai");
+    return `
+      <div class="adequacy-card">
+        <div class="adequacy-head">
+          <span class="cluster-num" style="width:22px;height:22px;font-size:11px;">${idx}</span>
+          <p class="adequacy-name">${cluster ? cluster.name : a.cluster}</p>
+          <span class="adequacy-score score-${a.score}">${a.score}/5 · ${scoreLabel}</span>
+        </div>
+        <div class="adequacy-bar s${a.score}">${bars}</div>
+        <div class="adequacy-body">
+          <strong>Hirarki regulasi</strong>${a.tier}
+          <strong>Kekuatan</strong>${a.strength}
+          <strong>Gap utama</strong>${a.gap}
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderGapPriority() {
+  const grid = document.getElementById("gap-priority-grid");
+  grid.innerHTML = GAP_PRIORITY.map(g => `
+    <div class="gap-card">
+      <div class="gap-head">
+        <p class="gap-title">${g.title}</p>
+        <span class="priority-badge prio-${g.priority}">${g.priority}</span>
+      </div>
+      <p class="gap-meta">Klaster: ${g.cluster}</p>
+      <p class="gap-desc">${g.desc}</p>
+    </div>
+  `).join("");
+}
+
+function renderRekomendasi() {
+  const list = document.getElementById("rekomendasi-list");
+  list.innerHTML = REKOMENDASI.map((r, i) => `
+    <div class="rekomendasi-item">
+      <span class="rekomendasi-num">${i+1}</span>
+      <div class="rekomendasi-body">
+        <p class="rekomendasi-title">${r.title}</p>
+        <p class="rekomendasi-desc">${r.desc}</p>
+        <div class="rekomendasi-tags">${r.tags.map(t => `<span class="tag">${t}</span>`).join("")}</div>
+      </div>
+    </div>
+  `).join("");
+}
+
+function buildTierFilters(containerId, onChange) {
+  const el = document.getElementById(containerId);
+  const state = new Set(TIER_ORDER);
+  el.innerHTML = TIER_ORDER.map(t => `<span class="tier-chip chip-${t}" data-tier="${t}">${TIER_LABELS[t]}</span>`).join("");
+  el.querySelectorAll(".tier-chip").forEach(chip => {
+    chip.addEventListener("click", () => {
+      const t = chip.dataset.tier;
+      if (state.has(t)) { state.delete(t); chip.classList.add("inactive"); }
+      else { state.add(t); chip.classList.remove("inactive"); }
+      if (state.size === 0) { TIER_ORDER.forEach(x => state.add(x)); el.querySelectorAll(".tier-chip").forEach(c => c.classList.remove("inactive")); }
+      onChange(state);
+    });
+  });
+  return state;
+}
+
+// Init
+document.addEventListener("DOMContentLoaded", () => {
+  renderKPI();
+  renderTopRegulations();
+  renderClusters();
+  renderAllRegulations();
+  renderTimeline();
+  renderCoherenceCards();
+  renderMatrix();
+  renderAdequacy();
+  renderGapPriority();
+  renderRekomendasi();
+
+  const clusterTiers = buildTierFilters("cluster-tier-filters", state => {
+    renderClusters(document.getElementById("cluster-search").value, state);
+  });
+  document.getElementById("cluster-search").addEventListener("input", e => {
+    renderClusters(e.target.value, clusterTiers);
+  });
+
+  const regTiers = buildTierFilters("reg-tier-filters", state => {
+    renderAllRegulations(document.getElementById("reg-search").value, state);
+  });
+  document.getElementById("reg-search").addEventListener("input", e => {
+    renderAllRegulations(e.target.value, regTiers);
+  });
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+    });
+  });
+});
+</script>
+</body>
+</html>
