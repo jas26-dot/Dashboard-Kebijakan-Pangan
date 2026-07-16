@@ -233,6 +233,49 @@
   .rekomendasi-title { font-weight: 500; font-size: 14px; margin: 0 0 4px; }
   .rekomendasi-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.55; }
   .rekomendasi-tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .ketepatan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+  .ketepatan-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .ket-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .ket-name { flex: 1; font-weight: 500; font-size: 14.5px; margin: 0; }
+  .ket-avg { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; letter-spacing: 0.2px; }
+  .ket-avg.rendah { background: var(--danger-bg); color: var(--danger); }
+  .ket-avg.sedang { background: var(--warning-bg); color: var(--warning); }
+  .ket-avg.tinggi { background: var(--success-bg); color: var(--success); }
+  .ket-dims { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .ket-dim { display: grid; grid-template-columns: 100px 1fr 32px; align-items: center; gap: 10px; font-size: 12.5px; }
+  .ket-dim-label { color: var(--text-2); }
+  .ket-dim-bar { display: flex; gap: 2px; }
+  .ket-dim-bar span { flex: 1; height: 6px; border-radius: 2px; background: var(--surface-2); }
+  .ket-dim-bar span.on { background: currentColor; }
+  .ket-dim.d1 { color: var(--danger); }
+  .ket-dim.d2 { color: var(--danger); }
+  .ket-dim.d3 { color: var(--warning); }
+  .ket-dim.d4 { color: var(--success); }
+  .ket-dim.d5 { color: var(--success); }
+  .ket-dim-score { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ket-note { font-size: 12px; color: var(--text-2); line-height: 1.55; padding: 8px 10px; background: var(--surface-2); border-radius: var(--radius); margin-top: 6px; }
+  .ket-note strong { color: var(--text); font-weight: 500; }
+  .tier-tree { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 24px; }
+  .tier-row { display: flex; align-items: center; gap: 12px; padding: 6px 0; }
+  .tier-row-label { min-width: 100px; font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.4px; font-weight: 500; flex-shrink: 0; }
+  .tier-row-nodes { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tier-node { background: var(--bg); border: 0.5px solid var(--border-strong); border-radius: 6px; padding: 5px 10px; font-size: 12px; color: var(--text); }
+  .tier-node.lead { background: var(--accent-bg); color: var(--accent); font-weight: 500; border-color: var(--accent); }
+  .tier-arrow { padding-left: 100px; color: var(--text-3); font-size: 14px; padding: 2px 0 2px 108px; }
+  .kl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; }
+  .kl-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .kl-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .kl-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 6px; background: var(--accent-bg); color: var(--accent); font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .kl-cluster-name { font-weight: 500; font-size: 14.5px; margin: 0; flex: 1; line-height: 1.35; }
+  .kl-row { display: flex; gap: 10px; padding: 6px 0; align-items: flex-start; border-top: 0.5px dashed var(--border); }
+  .kl-row:first-of-type { border-top: none; padding-top: 2px; }
+  .kl-role { font-size: 10.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 500; min-width: 88px; flex-shrink: 0; padding-top: 3px; }
+  .kl-role.lead { color: var(--accent); }
+  .kl-value { font-size: 12.5px; color: var(--text); line-height: 1.5; flex: 1; }
+  .kl-value.lead { font-weight: 500; }
+  .kl-value ul { margin: 0; padding-left: 16px; color: var(--text-2); }
+  .kl-value ul li { padding: 1px 0; }
+  .kl-dasar { font-size: 11.5px; color: var(--text-3); margin-top: 8px; padding-top: 8px; border-top: 0.5px dashed var(--border); font-style: italic; }
   footer { margin-top: 48px; padding-top: 20px; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text-3); text-align: center; }
   a { color: var(--accent); text-decoration: none; }
   a:hover { text-decoration: underline; }
@@ -267,6 +310,8 @@
   <button class="tab" data-tab="timeline">Timeline</button>
   <button class="tab" data-tab="keselarasan">Analisis keselarasan</button>
   <button class="tab" data-tab="kecukupan">Kecukupan &amp; gap</button>
+  <button class="tab" data-tab="ketepatan">Ketepatan kebijakan</button>
+  <button class="tab" data-tab="kl">K/L Leading Program</button>
 </nav>
 
 <section class="tab-panel active" id="tab-ringkasan">
@@ -408,6 +453,36 @@
   <p class="section-title" style="margin-top: 32px;">Rekomendasi harmonisasi regulasi</p>
   <p class="section-desc">Usulan revisi, penerbitan baru, dan konsolidasi untuk periode 2026-2029</p>
   <div class="rekomendasi-list" id="rekomendasi-list"></div>
+</section>
+
+<section class="tab-panel" id="tab-ketepatan">
+  <div class="callout">
+    <p><strong>Analisis ketepatan kebijakan</strong> mengevaluasi akurasi intervensi pada lima dimensi: <strong>tepat sasaran</strong> (right target), <strong>tepat waktu</strong> (right time), <strong>tepat jenis</strong> (right type/quantity), <strong>tepat tempat</strong> (right place), dan <strong>tepat mutu</strong> (right quality).</p>
+    <p>Skor menggunakan skala <strong>1-5</strong>: 1 = sangat tidak tepat, 3 = cukup tepat, 5 = sangat tepat. Skor rata-rata menunjukkan ketepatan agregat per klaster. Klaster dengan ketepatan tinggi menjadi contoh praktik terbaik; klaster ketepatan rendah menjadi prioritas perbaikan.</p>
+  </div>
+
+  <p class="section-title">Skor ketepatan per klaster</p>
+  <p class="section-desc">Penilaian pada lima dimensi ketepatan intervensi</p>
+  <div class="ketepatan-grid" id="ketepatan-grid"></div>
+
+  <p class="section-title" style="margin-top: 32px;">Rekomendasi peningkatan ketepatan</p>
+  <p class="section-desc">Prioritas perbaikan untuk klaster dengan skor rendah</p>
+  <div class="rekomendasi-list" id="ketepatan-rec-list"></div>
+</section>
+
+<section class="tab-panel" id="tab-kl">
+  <div class="callout">
+    <p><strong>K/L Leading Program</strong> memetakan penanggung jawab utama (leading) dan pendukung (supporting) untuk setiap klaster. Struktur berjenjang: <strong>Menko Pangan</strong> mengkoordinasi 27 K/L → <strong>K/L Pusat</strong> membuat kebijakan → <strong>BUMN Operator</strong> menjalankan pengadaan-distribusi → <strong>Pemda</strong> mengeksekusi lokal → <strong>Kelompok tani, Brigade Pangan, P3A/GP3A</strong> di lapangan.</p>
+    <p>Pemetaan penting untuk <strong>akuntabilitas audit</strong>: menentukan siapa yang bertanggung jawab bila program tidak berjalan sesuai target, dan siapa yang harus diperiksa untuk mendapatkan bukti implementasi.</p>
+  </div>
+
+  <p class="section-title">Struktur koordinasi berjenjang</p>
+  <p class="section-desc">Alur komando dari koordinator hingga pelaksana lapangan</p>
+  <div class="tier-tree" id="tier-tree"></div>
+
+  <p class="section-title" style="margin-top: 32px;">Peta K/L per klaster</p>
+  <p class="section-desc">Leading, supporting, BUMN operator, Pemda, dan pengawas per klaster</p>
+  <div class="kl-grid" id="kl-grid"></div>
 </section>
 
 <footer>
@@ -588,6 +663,160 @@ const REKOMENDASI = [
   { title: "Naikkan Inpres 14/2025 KSPEA menjadi UU atau PP", desc: "Untuk keberlanjutan lintas rezim, investasi KSPEA Rp50-80 T perlu payung setingkat UU atau PP dengan Badan Otorita permanen. Mengingat sensitivitas isu masyarakat adat, harus disertai FPIC eksplisit.", tags: ["KSPEA","UU/PP","Multi-tahun"] },
   { title: "Penguatan implementasi UU 41/2009 LP2B", desc: "Perpres percepatan integrasi LP2B ke RTRW dengan mekanisme insentif-disinsentif fiskal. Wajib diselaraskan dengan RPP RTRW Nasional untuk mencegah relaksasi tanpa mitigasi.", tags: ["Lahan","LP2B","Fiskal"] },
   { title: "PP Asuransi Pertanian", desc: "Meningkatkan cakupan AUTP dari <10% menjadi 30% luas tanam pada 2027, dengan klaim setara biaya usaha tani dan percepatan proses klaim.", tags: ["PP","AUTP","2027"] },
+];
+
+const KETEPATAN = [
+  { cluster: "lahan", sasaran: 3, waktu: 3, jenis: 3, tempat: 2, mutu: 3, note: "LP2B ada tapi belum semua provinsi masukkan ke RTRW. Lokasi cetak sawah rawa Papua/Kalteng berisiko akibat produktivitas awal 1-2 ton/ha. SID kadang belum tuntas saat konstruksi dimulai." },
+  { cluster: "benih", sasaran: 4, waktu: 4, jenis: 4, tempat: 3, mutu: 4, note: "e-Katalog dan sertifikasi BR + RE test sangat efektif. Varietas Inpari 32 HDB dan 42 Agritan GSR sesuai agroekologi umum. Gap: varietas untuk rawa pasang surut dan dataran tinggi." },
+  { cluster: "pupuk", sasaran: 4, waktu: 5, jenis: 3, tempat: 4, mutu: 5, note: "Penyaluran 1 Januari 2025 dan 2026 pencapaian historis. eRDKK + KTP tepat sasaran. Dosis spesifik lokasi belum konsisten diterapkan; porsi organik masih 5%." },
+  { cluster: "alsintan", sasaran: 4, waktu: 3, jenis: 4, tempat: 4, mutu: 3, note: "Modalitas Brigade Pangan tepat. Distribusi terkonsentrasi di kawasan prioritas. Tantangan: beberapa daerah baru terima akhir 2025; kapasitas operator terlatih terbatas." },
+  { cluster: "pascapanen", sasaran: 3, waktu: 3, jenis: 3, tempat: 3, mutu: 3, note: "Perpres 14/2026 baru terbit, implementasi belum penuh. Konsentrasi Jawa; dryer dan RMU luar Jawa masih kurang. Standar mutu beras belum baku semua provinsi." },
+  { cluster: "infra", sasaran: 4, waktu: 3, jenis: 4, tempat: 4, mutu: 3, note: "Prioritisasi rehabilitasi > pembangunan baru cost-effective. Kombinasi utama-tersier-air tanah komprehensif. Sinkronisasi jadwal PU-Kementan operasional masih perlu kalibrasi; P3A/GP3A pasif menghambat O&M." },
+  { cluster: "penyuluh", sasaran: 2, waktu: 2, jenis: 3, tempat: 2, mutu: 3, note: "Gap 45.000 orang membuat cakupan tidak tepat; banyak desa tidak ada penyuluh. Rekrutmen PPPK lambat. Sentralisasi konseptual tepat tapi eksekusi parsial. Digitalisasi belum merata." },
+  { cluster: "cadangan", sasaran: 5, waktu: 5, jenis: 5, tempat: 4, mutu: 4, note: "CBP 5,3 juta ton dengan 11 komoditas terkelola BULOG dan ID Food. Serapan Januari-Maret puncak panen. Kapasitas gudang mendekati limit; standar mutu terjaga via reprocessing." },
+  { cluster: "stabilisasi", sasaran: 4, waktu: 4, jenis: 4, tempat: 4, mutu: 4, note: "Instrumen lengkap: SPHP + GPM + FDP + Kios Pangan + bantuan pangan. Aktivasi cepat saat gejolak; RPATA memastikan kontinuitas. Belum mencakup pangan lokal (sagu, sorgum) dan perishable secara masif." },
+  { cluster: "supply", sasaran: 3, waktu: 3, jenis: 3, tempat: 3, mutu: 3, note: "Fokus komoditas pokok; perishable lemah. Cold chain terbatas; sebagian besar gudang statis. Konsentrasi Jawa dan lumbung. Traceability farm-to-fork belum penuh." },
+  { cluster: "eksim", sasaran: 5, waktu: 5, jenis: 4, tempat: 4, mutu: 3, note: "Nol impor 4 komoditas pokok tepat konteks. Stop impor 2025 saat stok global oversupply. Neraca Komoditas per komoditas. Belum ada trigger formal untuk impor darurat." },
+  { cluster: "kspea", sasaran: 3, waktu: 2, jenis: 4, tempat: 2, mutu: 2, note: "Integrasi tiga pilar konseptual tepat. Namun sequencing paralel berisiko (jalan+irigasi+cetak sawah dilaksanakan bersamaan). Lokasi Wanam jauh dari konsumsi Jawa. FPIC untuk masyarakat adat Marind belum eksplisit — risiko sosial-agraria tinggi." },
+];
+
+const KETEPATAN_REKOMENDASI = [
+  { title: "Pemetaan agroekologi spesifik lokasi", desc: "Melengkapi peta agroekologi hingga level desa untuk memandu pemilihan varietas benih, dosis pupuk spesifik lokasi, dan pilihan alsintan yang sesuai. Kerjasama Kementan-BRIN-BMKG-Pemda." },
+  { title: "Standardisasi timing kalender tanam nasional", desc: "Katam Terpadu digital yang mengintegrasikan pengiriman benih, pupuk, alsintan, dan air irigasi berdasarkan kalender tanam per kecamatan. Menutup gap sinkronisasi antar-input." },
+  { title: "Percepatan rekrutmen penyuluh untuk cakupan tepat", desc: "Target rasio 1:1 penyuluh:desa pada 2028 mutlak untuk mengembalikan ketepatan cakupan. Skema PPPK dilengkapi penyuluh swadaya berbasis Brigade Pangan." },
+  { title: "Sequencing bertahap KSPEA menggantikan pendekatan paralel", desc: "Tahap 1 FPIC + FS; Tahap 2 infrastruktur klaster 50.000 ha; Tahap 3 ekspansi bertahap. Setiap milestone dengan klausul stop-go untuk mencegah pengulangan kegagalan food estate." },
+  { title: "Perluasan cold chain untuk pascapanen dan perishable", desc: "Perpres 14/2026 dilengkapi dengan Perpres Terminal Agro dan Cold Chain Nasional yang mengatur stabilisasi komoditas perishable secara tepat waktu dan tepat mutu." },
+  { title: "Mekanisme trigger formal impor darurat", desc: "Kriteria formal: bila stok CBP < 2 juta ton ATAU harga beras > 1,5× HET selama 4 minggu, impor selektif dipertimbangkan lewat Rakortas menteri. Menghindari respons lambat saat krisis." },
+  { title: "Standar mutu pascapanen nasional", desc: "Perbadan Pangan yang menetapkan standar mutu beras, jagung, dan komoditas lain di seluruh provinsi. Menyeragamkan kualitas produk dari luar Jawa dengan Jawa." },
+  { title: "Program MANTAP untuk varietas agroekologi khusus", desc: "Menumbuhkan produsen benih daerah spesifik untuk rawa pasang surut (Papua, Kalimantan), dataran tinggi (NTT, Papua), dan salinitas (pantura). Menutup gap ketepatan varietas untuk agroekologi khusus." },
+];
+
+const KL_MAPPING = [
+  {
+    id: 1, name: "Lahan pertanian",
+    leading: "Kementerian Pertanian (Ditjen PSP + Ditjen LIP)",
+    supporting: ["Kementerian ATR/BPN — peta LP2B, integrasi RTRW", "Kementerian Dalam Negeri — koordinasi Pemda"],
+    bumn: [], pemda: "Pemprov & Pemkab menetapkan LP2B dalam RTRW; Camat & Kades pengawasan alih fungsi",
+    pengawas: "BPK RI, BPKP, Ombudsman RI",
+    dasar: "UU 41/2009 LP2B, Perpres 59/2019, Kepmen ATR 446.1/2024"
+  },
+  {
+    id: 2, name: "Bibit dan benih unggul",
+    leading: "Kementerian Pertanian (Ditjen Tanaman Pangan)",
+    supporting: ["BRIN — riset pemuliaan", "BRMP Padi — varietas unggul", "PVTPP — hak varietas"],
+    bumn: ["ID Food (PT Sang Hyang Seri, PT Pertani) — produsen benih BUMN"],
+    pemda: "BPSB (Balai Pengawasan Sertifikasi Benih) di setiap provinsi",
+    pengawas: "Ditjen TP Kementan, BPSB, BPK",
+    dasar: "UU 22/2019, UU 29/2000, PP 44/1995"
+  },
+  {
+    id: 3, name: "Pupuk bersubsidi",
+    leading: "Kementerian Pertanian (Ditjen PSP)",
+    supporting: ["Kementerian Perindustrian — industri pupuk", "Kementerian BUMN — holding", "Kementerian Keuangan — anggaran subsidi"],
+    bumn: ["PT Pupuk Indonesia (Persero) sebagai holding", "PIHC anggota: Petrokimia Gresik, Pusri Palembang, Pupuk Kaltim, Pupuk Kujang, Pupuk Iskandar Muda"],
+    pemda: "Dinas Pertanian kabupaten mengawasi distributor dan kios pengecer",
+    pengawas: "KPPU (kompetisi), Satgas Pangan, BPK",
+    dasar: "Perpres 15/2011, Kepmentan 644/2024 & 1117/2025"
+  },
+  {
+    id: 4, name: "Alat dan mesin pertanian",
+    leading: "Kementerian Pertanian (Ditjen PSP)",
+    supporting: ["Kementerian Perindustrian — produsen dalam negeri", "TNI (Babinsa) — pengawalan distribusi"],
+    bumn: [], pemda: "Dinas Pertanian kabupaten mendistribusikan ke poktan/UPJA; Brigade Pangan sebagai pengelola",
+    pengawas: "Balai Besar Pengembangan Mekanisasi Pertanian, BPK",
+    dasar: "UU 22/2019 (gap: tidak ada Perpres/PP khusus alsintan)"
+  },
+  {
+    id: 5, name: "Penanganan pascapanen",
+    leading: "Kementerian Pertanian (Ditjen TP) + Badan Pangan Nasional",
+    supporting: ["Kementerian Perindustrian — industri pengolahan", "Kementerian PU — infrastruktur pendukung"],
+    bumn: ["Perum BULOG — gudang, RMU", "ID Food — pengolahan"],
+    pemda: "Dinas Pertanian kabupaten memfasilitasi lokasi gudang dan RMU",
+    pengawas: "Ditjen TP, Bapanas (standar mutu), BPK",
+    dasar: "UU 18/2012, Perpres 14/2026"
+  },
+  {
+    id: 6, name: "Infrastruktur pangan (irigasi)",
+    leading: "Kementerian Pekerjaan Umum (Ditjen SDA, BBWS)",
+    supporting: ["Kementerian Pertanian (Ditjen LIP) — jaringan tersier", "Bappenas — perencanaan"],
+    bumn: ["PT Brantas Abipraya, PT Waskita Karya, PT Wijaya Karya — kontraktor irigasi dan bendungan"],
+    pemda: "Dinas PUPR kabupaten — irigasi kabupaten; P3A/GP3A — pengelolaan tersier oleh petani",
+    pengawas: "BPK, BPKP, Inspektorat Kemen-PU",
+    dasar: "UU 17/2019, PP 121/2015, Inpres 2/2025"
+  },
+  {
+    id: 7, name: "Penyuluh pertanian",
+    leading: "Kementerian Pertanian (BPPSDMP)",
+    supporting: ["Kementerian PANRB — pengaturan PPPK", "Kementerian Keuangan — anggaran", "Kementerian Desa — integrasi program desa"],
+    bumn: [], pemda: "BPP tingkat kecamatan; Dinas Pertanian kabupaten sebagai atasan langsung PPL",
+    pengawas: "Ditjen Kementan, PANRB, BPK",
+    dasar: "UU 16/2006, PP 43/2009"
+  },
+  {
+    id: 8, name: "Cadangan pangan pemerintah",
+    leading: "Badan Pangan Nasional (regulator)",
+    supporting: ["Kementerian BUMN — koordinasi operator", "Kementerian Keuangan — pembiayaan CPP", "Kementan — pengadaan gabah"],
+    bumn: ["Perum BULOG — operator utama CBP dan CJP", "ID Food (holding) — operator CKP dan komoditas lain"],
+    pemda: "CPPD (Cadangan Pangan Pemerintah Daerah) opsional; Dinas Ketahanan Pangan provinsi/kabupaten",
+    pengawas: "BPK, BPKP, KPPU",
+    dasar: "UU 18/2012, Perpres 125/2022, Perpres 48/2016 & 20/2017"
+  },
+  {
+    id: 9, name: "Stabilisasi harga",
+    leading: "Badan Pangan Nasional",
+    supporting: ["Kementerian Perdagangan — perdagangan dalam negeri", "Kementerian Dalam Negeri — TPID daerah", "Bank Indonesia — TPIP pusat"],
+    bumn: ["Perum BULOG — SPHP beras dan jagung", "ID Food — komoditas perishable dan lainnya"],
+    pemda: "TPID (Tim Pengendali Inflasi Daerah), Satgas Pangan Daerah, Gerakan Pangan Murah",
+    pengawas: "KPPU, Kepolisian (Satgas Pangan), BPK",
+    dasar: "Perpres 71/2015, Inpres 4/2026, Perbadan 15/2022"
+  },
+  {
+    id: 10, name: "Supply chain dan distribusi",
+    leading: "Badan Pangan Nasional (koordinasi rantai pasok)",
+    supporting: ["Kementerian Perdagangan", "Kementerian Perhubungan — transportasi", "Kementerian Perindustrian", "Kominfo — digitalisasi"],
+    bumn: ["Perum BULOG — distribusi beras", "ID Food — holding pangan", "PT Kereta Api Logistik, PT Pos Indonesia"],
+    pemda: "Pemprov/Pemkab menyelenggarakan Kios Pangan, GPM, dan Fasilitasi Distribusi Pangan (FDP)",
+    pengawas: "BPK, KPPU, Bapanas",
+    dasar: "Perpres 71/2015, Perpres 14/2026, PMK 84/2025"
+  },
+  {
+    id: 11, name: "Ekspor dan impor pangan",
+    leading: "Kementerian Perdagangan (Ditjen Perdagangan Luar Negeri)",
+    supporting: ["Kemenko Pangan — Neraca Komoditas", "Bapanas — rekomendasi supply", "Kemenlu — diplomasi pangan", "Bea Cukai — pengawasan pintu", "Karantina Pertanian — SPS"],
+    bumn: ["Perum BULOG — impor beras (bila ada)", "ID Food — komoditas lain"],
+    pemda: "-",
+    pengawas: "Bea Cukai, Karantina Pertanian, BPK, KPPU",
+    dasar: "UU 7/2014, Perpres 32/2022 Neraca Komoditas, PP 5/2021"
+  },
+  {
+    id: 12, name: "KSPEA",
+    leading: "Kementerian Koordinator Bidang Pangan (Ketua Tim Koordinasi 27 K/L)",
+    supporting: ["Kementan — cetak sawah, saprodi", "Kemen-PU — irigasi rawa, jalan", "Kemhan/TNI — pengamanan", "KLH — izin lingkungan", "Kem-ATR/BPN — tata ruang", "Kem-ESDM — pilar energi (B50, bioetanol)", "Kemenperin — industri hilir"],
+    bumn: ["PT Brantas Abipraya — jaringan irigasi rawa", "Pindad — industri pertahanan Wanam", "PT INKA — konektivitas", "PIHC — pupuk KSPEA"],
+    pemda: "Pemprov Papua Selatan, Pemkab Merauke & Boven Digoel — koordinasi lokal dan hak masyarakat adat Marind",
+    pengawas: "Dewan Pengawas Independen (usulan), BPK, KLH",
+    dasar: "Inpres 14/2025, Keppres 19/2025, PP 40/2025"
+  },
+];
+
+const TIER_TREE_DATA = [
+  { label: "Koordinator", nodes: [{n: "Kemenko Bidang Pangan", lead: true}] },
+  { label: "K/L Pusat", nodes: [
+    {n: "Kementan"}, {n: "Bapanas"}, {n: "Kemen-PU"}, {n: "Kemendag"}, {n: "Kemen-BUMN"},
+    {n: "Kem-ATR/BPN"}, {n: "Kemhan/TNI"}, {n: "Kem-ESDM"}, {n: "KLH"}, {n: "PANRB"},
+    {n: "Kemenkeu"}, {n: "Bappenas"}, {n: "BMKG"}, {n: "BRIN"}, {n: "BPS"}
+  ]},
+  { label: "BUMN Operator", nodes: [
+    {n: "Perum BULOG"}, {n: "ID Food (holding)"}, {n: "PT Sang Hyang Seri"},
+    {n: "PT Pupuk Indonesia (PIHC)"}, {n: "Perum Jasindo"}, {n: "PT Brantas Abipraya"}, {n: "Pindad"}
+  ]},
+  { label: "Pemda", nodes: [
+    {n: "Pemprov (38 provinsi)"}, {n: "Pemkab/Pemkot"}, {n: "Kecamatan (BPP)"}, {n: "Pemdes"}
+  ]},
+  { label: "Pelaksana", nodes: [
+    {n: "Brigade Pangan"}, {n: "Poktan / Gapoktan"}, {n: "P3A / GP3A"},
+    {n: "UPJA"}, {n: "Penyuluh (PPL, PPPK, swadaya)"}, {n: "Babinsa (TNI)"}
+  ]},
 ];
 
 // === RENDERING ===
@@ -857,6 +1086,91 @@ function renderRekomendasi() {
   `).join("");
 }
 
+function renderKetepatan() {
+  const grid = document.getElementById("ketepatan-grid");
+  const dims = [
+    { key: "sasaran", label: "Tepat sasaran" },
+    { key: "waktu", label: "Tepat waktu" },
+    { key: "jenis", label: "Tepat jenis" },
+    { key: "tempat", label: "Tepat tempat" },
+    { key: "mutu", label: "Tepat mutu" },
+  ];
+  grid.innerHTML = KETEPATAN.map(k => {
+    const cluster = CLUSTERS.find(c => c.id === k.cluster);
+    const idx = CLUSTERS.findIndex(c => c.id === k.cluster);
+    const avg = ((k.sasaran + k.waktu + k.jenis + k.tempat + k.mutu) / 5).toFixed(1);
+    const avgClass = avg <= 2.5 ? "rendah" : (avg <= 3.5 ? "sedang" : "tinggi");
+    const avgLabel = avg <= 2.5 ? "Rendah" : (avg <= 3.5 ? "Sedang" : "Tinggi");
+    const dimsHtml = dims.map(d => {
+      const s = k[d.key];
+      const bars = [1,2,3,4,5].map(i => `<span class="${i <= s ? 'on' : ''}"></span>`).join("");
+      return `
+        <div class="ket-dim d${s}">
+          <span class="ket-dim-label">${d.label}</span>
+          <div class="ket-dim-bar">${bars}</div>
+          <span class="ket-dim-score">${s}/5</span>
+        </div>
+      `;
+    }).join("");
+    return `
+      <div class="ketepatan-card">
+        <div class="ket-head">
+          <span class="cluster-num" style="width:22px;height:22px;font-size:11px;">${idx}</span>
+          <p class="ket-name">${cluster ? cluster.name : k.cluster}</p>
+          <span class="ket-avg ${avgClass}">${avg}/5 · ${avgLabel}</span>
+        </div>
+        <div class="ket-dims">${dimsHtml}</div>
+        <div class="ket-note"><strong>Catatan:</strong> ${k.note}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+function renderKetepatanRek() {
+  document.getElementById("ketepatan-rec-list").innerHTML = KETEPATAN_REKOMENDASI.map((r, i) => `
+    <div class="rekomendasi-item">
+      <span class="rekomendasi-num">${i+1}</span>
+      <div class="rekomendasi-body">
+        <p class="rekomendasi-title">${r.title}</p>
+        <p class="rekomendasi-desc">${r.desc}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderTierTree() {
+  const el = document.getElementById("tier-tree");
+  const rowsHtml = TIER_TREE_DATA.map((tier, i) => {
+    const nodesHtml = tier.nodes.map(node => `<span class="tier-node ${node.lead ? 'lead' : ''}">${node.n}</span>`).join("");
+    const arrow = i < TIER_TREE_DATA.length - 1 ? '<div class="tier-arrow">↓</div>' : "";
+    return `
+      <div class="tier-row">
+        <span class="tier-row-label">${tier.label}</span>
+        <div class="tier-row-nodes">${nodesHtml}</div>
+      </div>
+      ${arrow}
+    `;
+  }).join("");
+  el.innerHTML = rowsHtml;
+}
+
+function renderKLMapping() {
+  document.getElementById("kl-grid").innerHTML = KL_MAPPING.map(k => `
+    <div class="kl-card">
+      <div class="kl-head">
+        <span class="kl-num">${k.id}</span>
+        <p class="kl-cluster-name">${k.name}</p>
+      </div>
+      <div class="kl-row"><span class="kl-role lead">Leading</span><div class="kl-value lead">${k.leading}</div></div>
+      ${k.supporting.length ? `<div class="kl-row"><span class="kl-role">Supporting</span><div class="kl-value"><ul>${k.supporting.map(s => `<li>${s}</li>`).join("")}</ul></div></div>` : ""}
+      ${k.bumn.length ? `<div class="kl-row"><span class="kl-role">BUMN</span><div class="kl-value"><ul>${k.bumn.map(s => `<li>${s}</li>`).join("")}</ul></div></div>` : ""}
+      ${k.pemda && k.pemda !== "-" ? `<div class="kl-row"><span class="kl-role">Pemda</span><div class="kl-value">${k.pemda}</div></div>` : ""}
+      <div class="kl-row"><span class="kl-role">Pengawas</span><div class="kl-value">${k.pengawas}</div></div>
+      <p class="kl-dasar">Dasar hukum: ${k.dasar}</p>
+    </div>
+  `).join("");
+}
+
 function buildTierFilters(containerId, onChange) {
   const el = document.getElementById(containerId);
   const state = new Set(TIER_ORDER);
@@ -885,6 +1199,10 @@ document.addEventListener("DOMContentLoaded", () => {
   renderAdequacy();
   renderGapPriority();
   renderRekomendasi();
+  renderKetepatan();
+  renderKetepatanRek();
+  renderTierTree();
+  renderKLMapping();
 
   const clusterTiers = buildTierFilters("cluster-tier-filters", state => {
     renderClusters(document.getElementById("cluster-search").value, state);
