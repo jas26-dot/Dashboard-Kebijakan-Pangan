@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grand Design Swasembada Pangan Nasional 2026-2045</title>
+<style>
+  :root {
+    --bg: #F8F7F3;
+    --surface: #FFFFFF;
+    --surface-2: #F1EFE8;
+    --border: #E3E1D8;
+    --border-strong: #C9C7BE;
+    --text: #2C2C2A;
+    --text-2: #5F5E5A;
+    --text-3: #888780;
+    --accent: #185FA5;
+    --accent-bg: #E6F1FB;
+    --p1: #185FA5;
+    --p1-bg: #E6F1FB;
+    --p1-text: #042C53;
+    --p2: #0F6E56;
+    --p2-bg: #E1F5EE;
+    --p2-text: #04342C;
+    --p3: #534AB7;
+    --p3-bg: #EEEDFE;
+    --p3-text: #26215C;
+    --warning: #854F0B;
+    --warning-bg: #FAEEDA;
+    --danger: #A32D2D;
+    --danger-bg: #FCEBEB;
+    --success: #3B6D11;
+    --success-bg: #EAF3DE;
+    --radius: 8px;
+    --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a19; --surface: #262625; --surface-2: #2f2f2e;
+      --border: #3a3a38; --border-strong: #4a4a48;
+      --text: #E8E7E1; --text-2: #B4B2A9; --text-3: #888780;
+      --accent: #85B7EB; --accent-bg: #0C447C;
+      --p1: #85B7EB; --p1-bg: #0C447C; --p1-text: #E6F1FB;
+      --p2: #5DCAA5; --p2-bg: #085041; --p2-text: #E1F5EE;
+      --p3: #AFA9EC; --p3-bg: #3C3489; --p3-text: #EEEDFE;
+      --warning: #FAC775; --warning-bg: #633806;
+      --danger: #F09595; --danger-bg: #791F1F;
+      --success: #97C459; --success-bg: #27500A;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+  header { border-bottom: 0.5px solid var(--border); padding: 24px 0 20px; margin-bottom: 24px; }
+  header h1 { margin: 0 0 4px; font-size: 26px; font-weight: 500; letter-spacing: -0.4px; }
+  header p { margin: 0; color: var(--text-2); font-size: 14px; }
+  .badges { display: inline-flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; background: var(--surface-2); color: var(--text-2); }
+  .badge-p1 { background: var(--p1-bg); color: var(--p1-text); }
+  .badge-p2 { background: var(--p2-bg); color: var(--p2-text); }
+  .badge-p3 { background: var(--p3-bg); color: var(--p3-text); }
+  .visi-hero { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 20px 24px; margin-bottom: 24px; border-left: 4px solid var(--accent); }
+  .visi-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 8px; }
+  .visi-text { font-size: 17px; line-height: 1.55; margin: 0; font-weight: 400; color: var(--text); }
+  .visi-text strong { font-weight: 500; }
+  .section-title { font-size: 17px; font-weight: 500; margin: 24px 0 4px; }
+  .section-desc { font-size: 13px; color: var(--text-2); margin: 0 0 16px; }
+  .misi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .misi-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 16px; }
+  .misi-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 8px; background: var(--accent-bg); color: var(--accent); font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+  .misi-title { font-weight: 500; font-size: 14px; margin: 0 0 6px; }
+  .misi-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.5; }
+  .phase-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .phase-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 18px; border-top: 4px solid; position: relative; }
+  .phase-card.p1 { border-top-color: var(--p1); }
+  .phase-card.p2 { border-top-color: var(--p2); }
+  .phase-card.p3 { border-top-color: var(--p3); }
+  .phase-num { position: absolute; top: 14px; right: 16px; font-size: 32px; font-weight: 500; color: var(--surface-2); letter-spacing: -1px; }
+  .phase-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; font-weight: 500; }
+  .phase-card.p1 .phase-label { color: var(--p1); }
+  .phase-card.p2 .phase-label { color: var(--p2); }
+  .phase-card.p3 .phase-label { color: var(--p3); }
+  .phase-name { font-size: 17px; font-weight: 500; margin: 0 0 4px; letter-spacing: -0.2px; }
+  .phase-tagline { font-size: 13px; color: var(--text-2); font-style: italic; margin: 0 0 14px; }
+  .phase-highlights { display: flex; flex-direction: column; gap: 8px; }
+  .highlight { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; }
+  .highlight-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .p1 .highlight-dot { background: var(--p1); }
+  .p2 .highlight-dot { background: var(--p2); }
+  .p3 .highlight-dot { background: var(--p3); }
+  .highlight-text { color: var(--text-2); line-height: 1.5; }
+  .highlight-text strong { color: var(--text); font-weight: 500; }
+  .tabs { display: flex; gap: 2px; margin-bottom: 24px; border-bottom: 0.5px solid var(--border); overflow-x: auto; }
+  .tab { padding: 10px 14px; background: transparent; border: none; color: var(--text-2); font-size: 13.5px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -0.5px; white-space: nowrap; font-family: inherit; }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab.active.tp1 { border-bottom-color: var(--p1); }
+  .tab.active.tp2 { border-bottom-color: var(--p2); }
+  .tab.active.tp3 { border-bottom-color: var(--p3); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+  .target-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .target-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; }
+  .target-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.4px; margin: 0 0 4px; }
+  .target-value { font-size: 20px; font-weight: 500; margin: 0; letter-spacing: -0.2px; }
+  .target-sub { font-size: 11.5px; color: var(--text-2); margin: 2px 0 0; }
+  .target-card.p1 .target-value { color: var(--p1); }
+  .target-card.p2 .target-value { color: var(--p2); }
+  .target-card.p3 .target-value { color: var(--p3); }
+  .program-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px; margin-bottom: 20px; }
+  .program-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 12px 14px; }
+  .program-cluster { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; font-weight: 500; }
+  .program-title { font-weight: 500; font-size: 13.5px; margin: 0 0 4px; }
+  .program-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.5; }
+  .program-leading { font-size: 11.5px; color: var(--text-2); margin: 8px 0 0; padding-top: 8px; border-top: 0.5px dashed var(--border); }
+  .program-leading strong { color: var(--text); font-weight: 500; }
+  .kl-callout { background: var(--surface); border: 0.5px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 24px; }
+  .kl-callout p { margin: 0; font-size: 13.5px; color: var(--text-2); line-height: 1.6; }
+  .kl-callout p + p { margin-top: 8px; }
+  .kl-callout strong { color: var(--text); font-weight: 500; }
+  .koordinasi-tree { display: flex; flex-direction: column; gap: 4px; margin-bottom: 24px; }
+  .koordinasi-tier { display: flex; align-items: center; gap: 12px; }
+  .tier-label { min-width: 90px; font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.4px; font-weight: 500; flex-shrink: 0; }
+  .tier-nodes { flex: 1; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tier-node { background: var(--surface); border: 0.5px solid var(--border); border-radius: 6px; padding: 6px 10px; font-size: 12px; color: var(--text); }
+  .tier-node.tier-node-lead { background: var(--accent-bg); color: var(--accent); font-weight: 500; border-color: var(--accent); }
+  .tier-connector { padding-left: 90px; padding-top: 2px; padding-bottom: 2px; font-size: 14px; color: var(--text-3); text-align: left; }
+  .kl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .kl-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .kl-head { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .kl-num { display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 6px; background: var(--accent-bg); color: var(--accent); font-size: 12px; font-weight: 500; flex-shrink: 0; }
+  .kl-cluster-name { font-weight: 500; font-size: 14.5px; margin: 0; flex: 1; line-height: 1.35; }
+  .kl-row { display: flex; gap: 10px; padding: 6px 0; align-items: flex-start; border-top: 0.5px dashed var(--border); }
+  .kl-row:first-of-type { border-top: none; padding-top: 2px; }
+  .kl-role { font-size: 10.5px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.3px; font-weight: 500; min-width: 88px; flex-shrink: 0; padding-top: 3px; }
+  .kl-role.lead { color: var(--accent); }
+  .kl-value { font-size: 12.5px; color: var(--text); line-height: 1.5; flex: 1; }
+  .kl-value.lead { font-weight: 500; }
+  .kl-value ul { margin: 0; padding-left: 16px; color: var(--text-2); }
+  .kl-value ul li { padding: 1px 0; }
+  .kl-dasar { font-size: 11.5px; color: var(--text-3); margin-top: 8px; padding-top: 8px; border-top: 0.5px dashed var(--border); font-style: italic; }
+  .milestone-timeline { position: relative; padding-left: 24px; margin-bottom: 20px; }
+  .milestone-timeline::before { content: ""; position: absolute; left: 8px; top: 4px; bottom: 4px; width: 2px; background: var(--border); border-radius: 1px; }
+  .milestone { position: relative; padding-bottom: 12px; }
+  .milestone::before { content: ""; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--surface); border: 2px solid; }
+  .milestone.m1::before { border-color: var(--p1); }
+  .milestone.m2::before { border-color: var(--p2); }
+  .milestone.m3::before { border-color: var(--p3); }
+  .milestone-time { font-size: 11.5px; color: var(--text-3); font-weight: 500; }
+  .milestone-title { font-size: 13.5px; font-weight: 500; margin: 2px 0 3px; }
+  .milestone-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.5; }
+  .regulasi-list { display: flex; flex-direction: column; gap: 8px; }
+  .regulasi-item { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 10px 14px; display: flex; gap: 12px; align-items: flex-start; }
+  .reg-tier { display: inline-flex; align-items: center; justify-content: center; min-width: 60px; padding: 3px 8px; border-radius: 4px; font-size: 10.5px; font-weight: 600; letter-spacing: 0.3px; }
+  .reg-tier.uu { background: var(--p3-bg); color: var(--p3-text); }
+  .reg-tier.pp { background: var(--p1-bg); color: var(--p1-text); }
+  .reg-tier.prs { background: var(--p2-bg); color: var(--p2-text); }
+  .reg-tier.tek { background: var(--surface-2); color: var(--text-2); }
+  .reg-body { flex: 1; }
+  .reg-title { font-size: 13.5px; font-weight: 500; margin: 0 0 2px; }
+  .reg-desc { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.5; }
+  .kpi-table { width: 100%; background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); border-collapse: separate; border-spacing: 0; overflow: hidden; font-size: 13px; }
+  .kpi-table th, .kpi-table td { padding: 10px 12px; text-align: left; border-bottom: 0.5px solid var(--border); }
+  .kpi-table thead th { background: var(--surface-2); font-weight: 500; font-size: 12px; color: var(--text-2); text-transform: uppercase; letter-spacing: 0.3px; }
+  .kpi-table tbody tr:last-child td { border-bottom: none; }
+  .kpi-table td.num { text-align: right; font-variant-numeric: tabular-nums; font-weight: 500; }
+  .kpi-table .kpi-name { font-weight: 500; }
+  .kpi-table .kpi-unit { font-size: 11px; color: var(--text-3); margin-left: 3px; }
+  .kpi-table td.p1n { color: var(--p1); }
+  .kpi-table td.p2n { color: var(--p2); }
+  .kpi-table td.p3n { color: var(--p3); }
+  .risiko-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; }
+  .risiko-card { background: var(--surface); border: 0.5px solid var(--border); border-left: 3px solid var(--danger); border-radius: var(--radius-lg); padding: 14px 16px; }
+  .risiko-name { font-size: 14px; font-weight: 500; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+  .risiko-level { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--danger-bg); color: var(--danger); font-weight: 600; letter-spacing: 0.3px; text-transform: uppercase; }
+  .risiko-level.sedang { background: var(--warning-bg); color: var(--warning); }
+  .risiko-desc { font-size: 12.5px; color: var(--text-2); margin: 0 0 8px; line-height: 1.5; }
+  .risiko-mitigasi { font-size: 12.5px; color: var(--text-2); margin: 0; line-height: 1.5; padding: 8px 10px; background: var(--surface-2); border-radius: var(--radius); }
+  .risiko-mitigasi strong { color: var(--text); font-weight: 500; }
+  .budget-summary { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 14px 16px; margin-top: 16px; }
+  .budget-label { font-size: 11px; color: var(--text-3); text-transform: uppercase; letter-spacing: 0.4px; margin: 0 0 4px; font-weight: 500; }
+  .budget-value { font-size: 22px; font-weight: 500; margin: 0; letter-spacing: -0.3px; }
+  .budget-desc { font-size: 12px; color: var(--text-2); margin: 4px 0 0; }
+  .subhead { font-size: 14px; font-weight: 500; margin: 20px 0 10px; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .subhead-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .callout { background: var(--surface); border: 0.5px solid var(--border); border-left: 3px solid var(--accent); border-radius: var(--radius-lg); padding: 14px 16px; margin-bottom: 20px; }
+  .callout p { margin: 0; font-size: 13.5px; color: var(--text-2); line-height: 1.6; }
+  .callout p + p { margin-top: 8px; }
+  .callout strong { color: var(--text); font-weight: 500; }
+  footer { margin-top: 48px; padding-top: 20px; border-top: 0.5px solid var(--border); font-size: 12px; color: var(--text-3); text-align: center; }
+  @media (max-width: 768px) {
+    .container { padding: 16px; }
+    header h1 { font-size: 20px; }
+    .visi-text { font-size: 15px; }
+    .phase-overview, .target-grid, .program-grid, .risiko-grid, .misi-grid { grid-template-columns: 1fr; }
+    .kpi-table { font-size: 11.5px; }
+    .kpi-table th, .kpi-table td { padding: 8px 6px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <h1>Grand design swasembada pangan nasional 2026-2045</h1>
+  <p>Roadmap kedaulatan pangan berkelanjutan · 3 fase strategis · 12 klaster program</p>
+  <div class="badges">
+    <span class="badge badge-p1">Fase 1: 2026-2027</span>
+    <span class="badge badge-p2">Fase 2: 2028-2029</span>
+    <span class="badge badge-p3">Fase 3: 2030-2045</span>
+    <span class="badge">Indonesia Emas 2045</span>
+  </div>
+</header>
+
+<div class="visi-hero">
+  <p class="visi-label">Visi 2045</p>
+  <p class="visi-text">Indonesia menjadi <strong>negara berdaulat pangan</strong> yang mandiri, berkelanjutan, dan sejahtera bagi petani. Ditandai oleh produktivitas pertanian yang tinggi, ketahanan terhadap perubahan iklim, neraca pangan surplus multi-komoditas, sistem pangan-energi-air yang terintegrasi, serta pendapatan riil petani setara pekerja industri.</p>
+</div>
+
+<p class="section-title">Lima misi utama</p>
+<p class="section-desc">Landasan operasional untuk mencapai visi 2045</p>
+<div class="misi-grid">
+  <div class="misi-card">
+    <span class="misi-num">1</span>
+    <p class="misi-title">Kemandirian produksi</p>
+    <p class="misi-desc">Menjaga produksi domestik memenuhi seluruh kebutuhan pangan pokok dan strategis nasional tanpa ketergantungan impor.</p>
+  </div>
+  <div class="misi-card">
+    <span class="misi-num">2</span>
+    <p class="misi-title">Kesejahteraan petani</p>
+    <p class="misi-desc">Meningkatkan produktivitas, pendapatan riil, dan Nilai Tukar Petani secara berkelanjutan.</p>
+  </div>
+  <div class="misi-card">
+    <span class="misi-num">3</span>
+    <p class="misi-title">Ketahanan iklim</p>
+    <p class="misi-desc">Membangun sistem pangan yang tangguh terhadap perubahan iklim dan bencana melalui varietas adaptif, manajemen risiko, dan diversifikasi.</p>
+  </div>
+  <div class="misi-card">
+    <span class="misi-num">4</span>
+    <p class="misi-title">Integrasi pangan-energi-air</p>
+    <p class="misi-desc">Mengelola sumber daya alam secara terintegrasi dan berkelanjutan melalui pendekatan Food-Water-Energy Nexus.</p>
+  </div>
+  <div class="misi-card">
+    <span class="misi-num">5</span>
+    <p class="misi-title">Diversifikasi pangan pokok</p>
+    <p class="misi-desc">Mengurangi ketergantungan pada beras melalui promosi pangan lokal (sagu, sorgum, jagung, ubi) berbasis kearifan daerah.</p>
+  </div>
+</div>
+
+<p class="section-title">Peta jalan 3 fase strategis</p>
+<p class="section-desc">Dari konsolidasi swasembada hingga kedaulatan pangan berkelanjutan</p>
+<div class="phase-overview">
+  <div class="phase-card p1">
+    <span class="phase-num">1</span>
+    <p class="phase-label">Fase 1 · 2026-2027</p>
+    <h3 class="phase-name">Konsolidasi swasembada</h3>
+    <p class="phase-tagline">"Mempertahankan capaian, membangun ketahanan"</p>
+    <div class="phase-highlights">
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Produksi beras <strong>35 juta ton</strong></span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">CBP <strong>6 juta ton</strong> (>1,8 bulan konsumsi)</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Nol impor 4 komoditas pokok berlanjut</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Sistem manajemen risiko iklim aktif</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">+15.000 penyuluh PPPK direkrut</span></div>
+    </div>
+  </div>
+  <div class="phase-card p2">
+    <span class="phase-num">2</span>
+    <p class="phase-label">Fase 2 · 2028-2029</p>
+    <h3 class="phase-name">Ekspansi dan diversifikasi</h3>
+    <p class="phase-tagline">"Melampaui swasembada, menuju surplus"</p>
+    <div class="phase-highlights">
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Produksi beras <strong>40 juta ton</strong> (surplus 3 juta ton)</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Swasembada jagung penuh <strong>25 juta ton</strong></span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Rasio 1:1 penyuluh:desa tercapai</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">KSPEA Wanam operasional 500.000 ha</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Ekspor beras premium <strong>500.000 ton</strong></span></div>
+    </div>
+  </div>
+  <div class="phase-card p3">
+    <span class="phase-num">3</span>
+    <p class="phase-label">Fase 3 · 2030-2045</p>
+    <h3 class="phase-name">Kedaulatan pangan berkelanjutan</h3>
+    <p class="phase-tagline">"Pangan berkelanjutan untuk Indonesia Emas"</p>
+    <div class="phase-highlights">
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Swasembada penuh multi-komoditas</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">NTP <strong>>125</strong>, petani sejahtera</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Diversifikasi pangan pokok <strong>40% non-beras</strong></span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Netral karbon sektor pertanian 2045</span></div>
+      <div class="highlight"><span class="highlight-dot"></span><span class="highlight-text">Hub pangan Asia Tenggara</span></div>
+    </div>
+  </div>
+</div>
+
+<nav class="tabs">
+  <button class="tab active tp1" data-tab="fase1">Detail Fase 1</button>
+  <button class="tab tp2" data-tab="fase2">Detail Fase 2</button>
+  <button class="tab tp3" data-tab="fase3">Detail Fase 3</button>
+  <button class="tab" data-tab="kpi">KPI Progression</button>
+  <button class="tab" data-tab="regulasi">Roadmap Regulasi</button>
+  <button class="tab" data-tab="risiko">Risiko Strategis</button>
+  <button class="tab" data-tab="kl">K/L Penanggung Jawab</button>
+</nav>
+
+<section class="tab-panel active" id="tab-fase1">
+  <div class="callout">
+    <p><strong>Fase 1 · Konsolidasi Swasembada (2026-2027)</strong> berfokus pada mempertahankan capaian historis 2025 sambil menutup gap struktural. Prioritas utama: antisipasi risiko El Niño 2026 (probabilitas 50-80%), konsolidasi kelembagaan Bapanas dan Brigade Pangan, serta penutupan gap kritikal pada penyuluh, data terintegrasi, dan sistem manajemen risiko iklim.</p>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p1);"></span>Target kuantitatif</p>
+  <div class="target-grid">
+    <div class="target-card p1"><p class="target-label">Produksi beras</p><p class="target-value">35 jt ton</p><p class="target-sub">Naik 0,86% dari 2025</p></div>
+    <div class="target-card p1"><p class="target-label">Produksi jagung</p><p class="target-value">22 jt ton</p><p class="target-sub">Serapan CJP 1 juta ton</p></div>
+    <div class="target-card p1"><p class="target-label">Luas panen padi</p><p class="target-value">11,5 jt ha</p><p class="target-sub">Konsolidasi IP 2-3</p></div>
+    <div class="target-card p1"><p class="target-label">CBP</p><p class="target-value">6 jt ton</p><p class="target-sub">1,8 bulan konsumsi</p></div>
+    <div class="target-card p1"><p class="target-label">Impor beras</p><p class="target-value">0 ton</p><p class="target-sub">Nol impor berlanjut</p></div>
+    <div class="target-card p1"><p class="target-label">Susut panen</p><p class="target-value">&lt;10%</p><p class="target-sub">Turun dari 12-15%</p></div>
+    <div class="target-card p1"><p class="target-label">Penyuluh aktif</p><p class="target-value">53.000</p><p class="target-sub">+15.000 PPPK baru</p></div>
+    <div class="target-card p1"><p class="target-label">Cakupan AUTP</p><p class="target-value">30%</p><p class="target-sub">Luas tanam terlindung</p></div>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p1);"></span>Program prioritas per klaster</p>
+  <div class="program-grid" id="prog-1"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p1);"></span>Milestone kritis</p>
+  <div class="milestone-timeline" id="ms-1"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p1);"></span>Landasan hukum baru</p>
+  <div class="regulasi-list" id="reg-1"></div>
+
+  <div class="budget-summary">
+    <p class="budget-label">Anggaran indikatif Fase 1 (kumulatif 2 tahun)</p>
+    <p class="budget-value">Rp 250-300 triliun</p>
+    <p class="budget-desc">Termasuk pupuk subsidi Rp95 T, cetak sawah + irigasi Rp30 T, alsintan Rp15 T, benih Rp3 T, penyuluh PPPK Rp8 T, CBP dan stabilisasi Rp60 T, KSPEA persiapan Rp20 T, lain-lain Rp30-50 T</p>
+  </div>
+</section>
+
+<section class="tab-panel" id="tab-fase2">
+  <div class="callout">
+    <p><strong>Fase 2 · Ekspansi dan Diversifikasi (2028-2029)</strong> mendorong lompatan dari swasembada ke surplus multi-komoditas melalui transformasi kelembagaan besar (revisi UU Penyuluhan, PP Alsintan, UU KSPEA), ekspansi produktivitas via teknologi presisi, dan diversifikasi komoditas. KSPEA Wanam mulai operasional 500.000 ha; ekspor beras premium dibuka.</p>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p2);"></span>Target kuantitatif</p>
+  <div class="target-grid">
+    <div class="target-card p2"><p class="target-label">Produksi beras</p><p class="target-value">40 jt ton</p><p class="target-sub">Surplus 3 juta ton</p></div>
+    <div class="target-card p2"><p class="target-label">Produksi jagung</p><p class="target-value">25 jt ton</p><p class="target-sub">Swasembada penuh</p></div>
+    <div class="target-card p2"><p class="target-label">Produksi kedelai</p><p class="target-value">2 jt ton</p><p class="target-sub">Substitusi impor 30%</p></div>
+    <div class="target-card p2"><p class="target-label">NTP</p><p class="target-value">&gt;115</p><p class="target-sub">Petani sejahtera</p></div>
+    <div class="target-card p2"><p class="target-label">Susut panen</p><p class="target-value">&lt;8%</p><p class="target-sub">RMU modern 5.000 unit</p></div>
+    <div class="target-card p2"><p class="target-label">Ekspor beras</p><p class="target-value">500.000 ton</p><p class="target-sub">Premium market</p></div>
+    <div class="target-card p2"><p class="target-label">Cetak sawah</p><p class="target-value">1,5 jt ha</p><p class="target-sub">Kumulatif sejak 2025</p></div>
+    <div class="target-card p2"><p class="target-label">Penyuluh aktif</p><p class="target-value">83.000</p><p class="target-sub">Rasio 1:1 desa</p></div>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p2);"></span>Program prioritas per klaster</p>
+  <div class="program-grid" id="prog-2"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p2);"></span>Milestone kritis</p>
+  <div class="milestone-timeline" id="ms-2"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p2);"></span>Landasan hukum baru</p>
+  <div class="regulasi-list" id="reg-2"></div>
+
+  <div class="budget-summary">
+    <p class="budget-label">Anggaran indikatif Fase 2 (kumulatif 2 tahun)</p>
+    <p class="budget-value">Rp 400-500 triliun</p>
+    <p class="budget-desc">Kenaikan didorong ekspansi KSPEA Wanam (Rp80-100 T), 30.000 tambahan penyuluh PPPK (Rp20 T), infrastruktur pascapanen dan cold chain (Rp50 T), transformasi digital pertanian (Rp15 T)</p>
+  </div>
+</section>
+
+<section class="tab-panel" id="tab-fase3">
+  <div class="callout">
+    <p><strong>Fase 3 · Kedaulatan Pangan Berkelanjutan (2030-2045)</strong> selaras dengan visi Indonesia Emas 2045. Fokus jangka panjang: swasembada penuh multi-komoditas, diversifikasi pangan pokok, ekspor produk bernilai tambah tinggi, netral karbon sektor pertanian, dan Indonesia sebagai hub pangan Asia Tenggara. Termasuk revisi UU 18/2012 Pangan dan penerbitan UU Sistem Pertanian Berkelanjutan.</p>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p3);"></span>Target akhir 2045</p>
+  <div class="target-grid">
+    <div class="target-card p3"><p class="target-label">Produksi beras</p><p class="target-value">45 jt ton</p><p class="target-sub">Surplus untuk ekspor</p></div>
+    <div class="target-card p3"><p class="target-label">Swasembada</p><p class="target-value">Penuh</p><p class="target-sub">Multi-komoditas</p></div>
+    <div class="target-card p3"><p class="target-label">NTP</p><p class="target-value">&gt;125</p><p class="target-sub">Setara pekerja industri</p></div>
+    <div class="target-card p3"><p class="target-label">Susut panen</p><p class="target-value">&lt;5%</p><p class="target-sub">Standar internasional</p></div>
+    <div class="target-card p3"><p class="target-label">Ekspor pangan</p><p class="target-value">USD 20 mil</p><p class="target-sub">Bernilai tambah tinggi</p></div>
+    <div class="target-card p3"><p class="target-label">Diversifikasi</p><p class="target-value">40%</p><p class="target-sub">Non-beras</p></div>
+    <div class="target-card p3"><p class="target-label">Emisi GRK</p><p class="target-value">-30%</p><p class="target-sub">Dari baseline 2020</p></div>
+    <div class="target-card p3"><p class="target-label">Netral karbon</p><p class="target-value">2045</p><p class="target-sub">Sektor pertanian</p></div>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p3);"></span>Program prioritas per klaster</p>
+  <div class="program-grid" id="prog-3"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p3);"></span>Milestone kritis</p>
+  <div class="milestone-timeline" id="ms-3"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p3);"></span>Landasan hukum baru</p>
+  <div class="regulasi-list" id="reg-3"></div>
+
+  <div class="budget-summary">
+    <p class="budget-label">Anggaran indikatif Fase 3 (kumulatif 15 tahun)</p>
+    <p class="budget-value">Rp 3.000-4.000 triliun</p>
+    <p class="budget-desc">Investasi jangka panjang: KSPEA multi-lokasi (Wanam, Kalteng, Kalsel, Sumsel), precision agriculture, riset genomik, transisi ke pertanian rendah karbon, ekspansi ekspor</p>
+  </div>
+</section>
+
+<section class="tab-panel" id="tab-kpi">
+  <div class="callout">
+    <p><strong>KPI progression</strong> menunjukkan trayektori indikator kunci dari baseline 2025 hingga target akhir 2045. Angka bersifat indikatif; kenaikan bertahap didesain realistis mengingat kondisi iklim, fiskal, dan kelembagaan.</p>
+  </div>
+
+  <div style="overflow-x: auto;">
+    <table class="kpi-table">
+      <thead>
+        <tr>
+          <th>Indikator</th>
+          <th style="text-align:right;">Baseline 2025</th>
+          <th style="text-align:right;">Fase 1 (2027)</th>
+          <th style="text-align:right;">Fase 2 (2029)</th>
+          <th style="text-align:right;">Fase 3 (2045)</th>
+        </tr>
+      </thead>
+      <tbody id="kpi-table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="tab-panel" id="tab-regulasi">
+  <div class="callout">
+    <p><strong>Roadmap regulasi</strong> merangkum rencana penerbitan dan revisi peraturan sepanjang 3 fase. Fokus jangka pendek pada Perpres (cepat, tidak perlu legislasi). Jangka menengah pada UU/PP kunci. Jangka panjang pada revisi UU induk.</p>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p1);"></span>2026-2027 (Fase 1)</p>
+  <div class="regulasi-list" id="roadmap-1"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p2);"></span>2028-2029 (Fase 2)</p>
+  <div class="regulasi-list" id="roadmap-2"></div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--p3);"></span>2030-2045 (Fase 3)</p>
+  <div class="regulasi-list" id="roadmap-3"></div>
+</section>
+
+<section class="tab-panel" id="tab-risiko">
+  <div class="callout">
+    <p><strong>Risiko strategis</strong> yang dapat menghambat pencapaian grand design. Dikelompokkan berdasarkan tingkat urgensi. Setiap risiko disertai strategi mitigasi yang harus dijalankan sepanjang tiga fase.</p>
+  </div>
+
+  <div class="risiko-grid" id="risiko-grid"></div>
+</section>
+
+<section class="tab-panel" id="tab-kl">
+  <div class="kl-callout">
+    <p><strong>K/L Penanggung Jawab</strong> memetakan siapa yang memimpin (leading) dan mendukung (supporting) setiap program klaster ketahanan pangan. Pemetaan mengikuti struktur pemerintahan Prabowo (2024-2029) dengan Kemenko Bidang Pangan sebagai koordinator utama.</p>
+    <p>Struktur pelaksanaan berjenjang: <strong>Menko Pangan</strong> mengkoordinasi 27 K/L pusat → <strong>K/L Pusat</strong> mengeluarkan kebijakan dan alokasi → <strong>BUMN Operator</strong> menjalankan pengadaan dan distribusi → <strong>Pemda</strong> mengeksekusi di daerah → <strong>Kelompok Tani, Brigade Pangan, P3A/GP3A</strong> di tingkat lapangan.</p>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--accent);"></span>Struktur koordinasi berjenjang</p>
+  <div class="koordinasi-tree">
+    <div class="koordinasi-tier">
+      <span class="tier-label">Koordinator</span>
+      <div class="tier-nodes">
+        <span class="tier-node tier-node-lead">Kemenko Bidang Pangan</span>
+      </div>
+    </div>
+    <div class="tier-connector">↓</div>
+    <div class="koordinasi-tier">
+      <span class="tier-label">K/L Pusat</span>
+      <div class="tier-nodes">
+        <span class="tier-node">Kementan</span>
+        <span class="tier-node">Bapanas</span>
+        <span class="tier-node">Kemen-PU</span>
+        <span class="tier-node">Kemendag</span>
+        <span class="tier-node">Kemen-BUMN</span>
+        <span class="tier-node">Kem-ATR/BPN</span>
+        <span class="tier-node">Kemhan/TNI</span>
+        <span class="tier-node">Kem-ESDM</span>
+        <span class="tier-node">KLH</span>
+        <span class="tier-node">PANRB</span>
+        <span class="tier-node">Kemenkeu</span>
+        <span class="tier-node">Bappenas</span>
+        <span class="tier-node">BMKG</span>
+        <span class="tier-node">BRIN</span>
+        <span class="tier-node">BPS</span>
+      </div>
+    </div>
+    <div class="tier-connector">↓</div>
+    <div class="koordinasi-tier">
+      <span class="tier-label">BUMN Operator</span>
+      <div class="tier-nodes">
+        <span class="tier-node">Perum BULOG</span>
+        <span class="tier-node">ID Food (holding)</span>
+        <span class="tier-node">PT Sang Hyang Seri</span>
+        <span class="tier-node">PT Pupuk Indonesia (PIHC)</span>
+        <span class="tier-node">Perum Jasindo</span>
+        <span class="tier-node">PT Brantas Abipraya</span>
+        <span class="tier-node">Pindad</span>
+      </div>
+    </div>
+    <div class="tier-connector">↓</div>
+    <div class="koordinasi-tier">
+      <span class="tier-label">Pemda</span>
+      <div class="tier-nodes">
+        <span class="tier-node">Pemprov (38 provinsi)</span>
+        <span class="tier-node">Pemkab/Pemkot</span>
+        <span class="tier-node">Kecamatan (BPP)</span>
+        <span class="tier-node">Pemdes</span>
+      </div>
+    </div>
+    <div class="tier-connector">↓</div>
+    <div class="koordinasi-tier">
+      <span class="tier-label">Pelaksana</span>
+      <div class="tier-nodes">
+        <span class="tier-node">Brigade Pangan</span>
+        <span class="tier-node">Poktan / Gapoktan</span>
+        <span class="tier-node">P3A / GP3A</span>
+        <span class="tier-node">UPJA</span>
+        <span class="tier-node">Penyuluh (PPL, PPPK, swadaya)</span>
+        <span class="tier-node">Babinsa (TNI)</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="subhead"><span class="subhead-dot" style="background: var(--accent);"></span>Peta K/L per klaster program</p>
+  <div class="kl-grid" id="kl-grid"></div>
+</section>
+
+<footer>
+  Grand Design Swasembada Pangan Nasional 2026-2045 · Kertas kerja indikatif · Mei 2026<br>
+  Angka target dan anggaran bersifat proyeksi berdasarkan tren dan asumsi kondisi normal · Perlu penyesuaian berdasarkan realitas fiskal dan geopolitik
+</footer>
+
+</div>
+
+<script>
+const PROGRAMS_1 = [
+  { cluster: "Lahan", title: "Cetak sawah 400.000 ha", desc: "Fokus Papua Selatan, Kalteng, Kalsel; sinkron dengan irigasi tersier siap 30 hari sebelum tanam", leading: "Kementan (Ditjen PSP + Ditjen LIP)" },
+  { cluster: "Benih", title: "90.000 ton benih unggul + 5 varietas adaptif", desc: "Inpari GSR, tahan genangan, tahan salinitas; distribusi via e-Katalog", leading: "Kementan (Ditjen Tanaman Pangan); ID Food-SHS operator" },
+  { cluster: "Pupuk", title: "Alokasi 9,55 juta ton, HET stabil", desc: "Efisiensi industri berlanjut; porsi organik naik dari 5% ke 10%", leading: "Kementan (Ditjen PSP); PT Pupuk Indonesia operator" },
+  { cluster: "Alsintan", title: "1.500 Brigade Pangan aktif", desc: "Standar nasional kepemilikan alsintan; pemeliharaan multi-tahun terjamin", leading: "Kementan (Ditjen PSP); TNI (Babinsa) pengawalan" },
+  { cluster: "Pascapanen", title: "25.000 gudang + dryer + RMU", desc: "Perpres 14/2026 percepatan; target susut panen turun ke <10%", leading: "Kementan (Ditjen TP) + Bapanas + Perum BULOG" },
+  { cluster: "Irigasi", title: "Rehabilitasi 750.000 ha", desc: "Inpres 2/2025 dilanjutkan; aktivasi P3A/GP3A untuk pengelolaan tersier", leading: "Kemen-PU (Ditjen SDA) + Kementan (Ditjen LIP)" },
+  { cluster: "Penyuluh", title: "+15.000 PPPK penyuluh baru", desc: "Total 53.000 penyuluh; pilot digitalisasi Katam BPP tingkat kecamatan", leading: "Kementan (BPPSDMP) + PANRB" },
+  { cluster: "Cadangan", title: "CBP 6 juta ton stabil", desc: "Kapasitas gudang diperluas; mekanisme trigger impor darurat ditetapkan", leading: "Bapanas; Perum BULOG operator" },
+  { cluster: "Stabilisasi", title: "HPP Rp6.500 dipertahankan", desc: "SPHP beras dan jagung diperkuat; perluasan ke pangan lokal (sagu, sorgum)", leading: "Bapanas; BULOG + ID Food operator" },
+  { cluster: "Supply chain", title: "Cold chain 500 titik strategis", desc: "Kios Pangan diperluas; digitalisasi rantai pasok", leading: "Bapanas + Kemendag + Kemen-BUMN" },
+  { cluster: "Ekspor-impor", title: "Nol impor 4 komoditas; ekspor premium 100.000 ton", desc: "Trigger impor darurat formal; diplomasi pangan Thailand-Vietnam-India", leading: "Kemendag + Kemenko Pangan (Neraca Komoditas)" },
+  { cluster: "KSPEA", title: "FS + FPIC lengkap; klaster 50.000 ha", desc: "Restrukturisasi sequencing empat tahap; Dewan Pengawas Independen dibentuk", leading: "Kemenko Pangan (Tim Koordinasi); Kementan, Kemen-PU, Kemhan/TNI, Pindad" },
+];
+
+const PROGRAMS_2 = [
+  { cluster: "Lahan", title: "Cetak sawah kumulatif 1,5 juta ha", desc: "LP2B integrasi RTRW 100%; konversi netto turun ke 30.000 ha/tahun", leading: "Kementan (Ditjen PSP + LIP) + ATR/BPN + Pemda" },
+  { cluster: "Benih", title: "15 varietas adaptif + MANTAP 300 produsen lokal", desc: "Sistem sertifikasi cepat via RE test; peningkatan mutu benih di daerah 3T", leading: "Kementan (Ditjen TP) + BRIN + ID Food-SHS" },
+  { cluster: "Pupuk", title: "10-11 juta ton; organik 15%", desc: "Perluasan cakupan; subsidi berbasis kinerja mulai dipiloti di 5 provinsi", leading: "Kementan (Ditjen PSP) + PT Pupuk Indonesia + Kemenkeu" },
+  { cluster: "Alsintan", title: "3.000 Brigade Pangan aktif", desc: "PP Alsintan Pertanian mengatur standar dan pemeliharaan; UPJA modernisasi", leading: "Kementan (Ditjen PSP) + Kemenperin + Pemda" },
+  { cluster: "Pascapanen", title: "Susut panen <8%; RMU modern 5.000 unit", desc: "Terminal agro modern di 34 provinsi; standar mutu beras terharmonisasi", leading: "Kementan (Ditjen TP) + Bapanas + Kemenperin + Perum BULOG" },
+  { cluster: "Irigasi", title: "Kumulatif 3 juta ha rehabilitasi; IPHA 1 juta ha", desc: "Kapasitas tampungan bertambah via 20 bendungan baru; smart water management", leading: "Kemen-PU (Ditjen SDA + BBWS) + Kementan (LIP) + Pemda" },
+  { cluster: "Penyuluh", title: "83.000 penyuluh (rasio 1:1 desa)", desc: "Revisi UU 16/2006 disahkan; digitalisasi 100% BPP tingkat kecamatan", leading: "Kementan (BPPSDMP) + PANRB + Pemda + Kemendes" },
+  { cluster: "Cadangan", title: "CBP 8 juta ton (>2 bulan konsumsi)", desc: "Cadangan multi-komoditas diperkuat; Perpres 125/2022 direvisi", leading: "Bapanas + Perum BULOG + ID Food + Kemen-BUMN" },
+  { cluster: "Stabilisasi", title: "SPHP perishable via terminal agro", desc: "Instrumen stabilisasi cabai dan bawang aktif; harga digital transparan", leading: "Bapanas + BULOG + ID Food + Kemendag + TPID" },
+  { cluster: "Supply chain", title: "Cold chain nasional aktif", desc: "Blockchain traceability piloti komoditas ekspor; Kios Pangan 5.000 titik", leading: "Bapanas + Kemendag + Kemenhub + Kemen-BUMN" },
+  { cluster: "Ekspor-impor", title: "Neraca perdagangan pangan surplus", desc: "Ekspor beras premium 500.000 ton; hub pangan regional dimulai", leading: "Kemendag + Kemenko Pangan + Bapanas + Bea Cukai" },
+  { cluster: "KSPEA", title: "Wanam 500.000 ha operasional", desc: "UU/PP KSPEA disahkan; Badan Otorita permanen terbentuk", leading: "Badan Otorita KSPEA + Kemenko Pangan (27 K/L)" },
+];
+
+const PROGRAMS_3 = [
+  { cluster: "Lahan", title: "Precision farming skala nasional", desc: "LP2B kokoh dengan konversi netto 0; satelit monitoring real-time", leading: "Kementan + ATR/BPN + BRIN + BIG" },
+  { cluster: "Benih", title: "Pusat riset genomik pangan nasional", desc: "Ekspor benih varietas Indonesia ke pasar tropis global", leading: "BRIN + Kementan (Ditjen TP) + universitas riset" },
+  { cluster: "Pupuk", title: "50% organik; subsidi berbasis kinerja", desc: "Sistem soil test dinamis; presisi pupuk per petak sawah", leading: "Kementan + PT Pupuk Indonesia + BRIN + Kemenkeu" },
+  { cluster: "Alsintan", title: "100% mekanisasi", desc: "Autonomous farming; drone terintegrasi dengan kalender tanam AI", leading: "Kementan + Kemenperin + BRIN + industri swasta" },
+  { cluster: "Pascapanen", title: "Susut panen <5% standar internasional", desc: "Ekspor produk pangan bernilai tambah tinggi (specialty rice, premium)", leading: "Kementan + Bapanas + Kemenperin + BULOG + ID Food" },
+  { cluster: "Irigasi", title: "100% jaringan kondisi baik", desc: "Water security nasional; adaptasi iklim penuh", leading: "Kemen-PU + Kementan + BMKG + Pemda" },
+  { cluster: "Penyuluh", title: "100.000+ penyuluh + digital", desc: "Penyuluh AI-assisted; setiap petani punya penyuluh digital 24/7", leading: "Kementan (BPPSDMP) + PANRB + Kemenkominfo" },
+  { cluster: "Cadangan", title: "CBP 10-12 juta ton; multi-komoditas 3 bulan", desc: "Sistem cadangan strategis nasional untuk keadaan darurat global", leading: "Bapanas + BULOG + ID Food + Kemenkeu + Bappenas" },
+  { cluster: "Stabilisasi", title: "Instrumen digital transparent pricing", desc: "AI-driven price stabilization; predictive analytics untuk anomali harga", leading: "Bapanas + Kemendag + BULOG + Kemenkominfo" },
+  { cluster: "Supply chain", title: "Blockchain traceability nasional", desc: "Full traceability farm-to-fork; standar keamanan pangan tertinggi", leading: "Bapanas + Kemendag + Kemenperin + BULOG + Kominfo" },
+  { cluster: "Ekspor-impor", title: "Hub pangan Asia Tenggara", desc: "USD 20 miliar/tahun ekspor pangan bernilai tambah", leading: "Kemendag + Kemenko Perekonomian + Kemenlu + BKPM" },
+  { cluster: "KSPEA", title: "5 KSPEA operasional (Wanam, Kalteng, Kalsel, Sumsel, +1)", desc: "Integrasi penuh pangan-energi-air; sertifikasi keberlanjutan global", leading: "Badan Otorita KSPEA (permanen) + Menko Pangan + 27 K/L" },
+];
+
+const MILESTONES_1 = [
+  { time: "Q1 2026", title: "Sistem Manajemen Risiko Iklim Pertanian aktif", desc: "Perpres diterbitkan; peringatan dini BMKG-Kementan terintegrasi ke Katam" },
+  { time: "Q2 2026", title: "Single Farmer ID roll out nasional", desc: "Perpres 125/2022 direvisi; Bapanas sebagai walidata sektor pangan" },
+  { time: "Q3 2026", title: "FPIC KSPEA Wanam selesai", desc: "Musyawarah adat Marind terdokumentasi; klausul revocability disepakati" },
+  { time: "Q4 2026", title: "15.000 PPPK penyuluh terekrut", desc: "Sinkronisasi UU 16/2006 dengan UU 23/2014 via Perpres transisi" },
+  { time: "Q1 2027", title: "25.000 gudang tercapai (Perpres 14/2026)", desc: "Susut panen turun ke <10%; kapasitas nasional dryer + RMU memadai" },
+  { time: "Q4 2027", title: "Evaluasi menyeluruh Fase 1", desc: "Konsolidasi capaian; penyesuaian target Fase 2 berdasarkan hasil" },
+];
+
+const MILESTONES_2 = [
+  { time: "2028", title: "Revisi UU 16/2006 Sistem Penyuluhan disahkan", desc: "PPPK penyuluh berpayung UU; sinergi Brigade Pangan tetap" },
+  { time: "2028", title: "PP Alsintan Pertanian + PP Perbenihan baru", desc: "Standar nasional alsintan; sertifikasi cepat benih adaptif iklim" },
+  { time: "2028", title: "Cetak sawah kumulatif 1 juta ha", desc: "Milestone tengah menuju target 3 juta ha 2029" },
+  { time: "2029", title: "KSPEA Wanam 500.000 ha operasional", desc: "UU/PP KSPEA disahkan; Badan Otorita permanen" },
+  { time: "2029", title: "83.000 penyuluh tercapai (rasio 1:1)", desc: "Milestone historis; ujung tombak pendampingan lengkap" },
+  { time: "2029", title: "Ekspor beras premium 500.000 ton", desc: "Neraca perdagangan pangan mulai surplus" },
+];
+
+const MILESTONES_3 = [
+  { time: "2030", title: "RPJMN 2030-2034 dengan target surplus multi-komoditas", desc: "Grand design masuk dokumen perencanaan nasional formal" },
+  { time: "2035", title: "Cetak sawah kumulatif 3 juta ha; KSPEA Wanam 1 juta ha", desc: "Milestone tengah menuju kedaulatan pangan" },
+  { time: "2035", title: "Revisi UU 18/2012 Pangan disahkan", desc: "Pangan berkelanjutan dan berdaulat sebagai kerangka baru" },
+  { time: "2040", title: "Diversifikasi pangan pokok 30% non-beras", desc: "Sagu, sorgum, jagung, ubi menjadi bagian konsumsi pokok" },
+  { time: "2045", title: "Kedaulatan pangan penuh; netral karbon", desc: "Indonesia Emas 2045: berdaulat, mandiri, sejahtera, berkelanjutan" },
+];
+
+const REG_1 = [
+  { tier: "prs", title: "Perpres Single Farmer ID", desc: "Integrasi eRDKK, e-Katalog, simluhtan, daftar Brigade Pangan, penerima alsintan, dan PBP dalam satu basis data petani nasional" },
+  { tier: "prs", title: "Perpres Sistem Manajemen Risiko Iklim Pertanian", desc: "Peringatan dini BMKG-Kementan, Katam Terpadu digital, AUTP diperluas, stockpile benih emergency, protokol respons banjir-kekeringan" },
+  { tier: "prs", title: "Perpres Alsintan Pertanian", desc: "Payung setingkat Perpres untuk standar nasional, model kepemilikan, pemeliharaan, dan pembiayaan berkelanjutan" },
+  { tier: "prs", title: "Revisi Perpres 125/2022 CPP", desc: "Perluasan cakupan komoditas; mekanisme trigger impor darurat; sinkronisasi dengan Neraca Komoditas" },
+  { tier: "prs", title: "Perpres Terminal Agro dan Cold Chain Nasional", desc: "Payung untuk stabilisasi komoditas perishable (cabai, bawang, hortikultura)" },
+];
+
+const REG_2 = [
+  { tier: "uu", title: "Revisi UU 16/2006 Sistem Penyuluhan Pertanian", desc: "Skema PPPK penyuluh, integrasi Brigade Pangan, sentralisasi kewenangan, digitalisasi penyuluhan; harmonisasi dengan UU 23/2014 Pemda" },
+  { tier: "pp", title: "Revisi PP 44/1995 Perbenihan Tanaman", desc: "Akomodasi varietas GSR, tahan iklim, sistem sertifikasi cepat, integrasi e-Katalog, program MANTAP" },
+  { tier: "uu", title: "UU / PP KSPEA", desc: "Payung permanen KSPEA menggantikan Inpres 14/2025; Badan Otorita setingkat IKN; FPIC eksplisit; klausul stop-go" },
+  { tier: "pp", title: "PP Asuransi Pertanian", desc: "Cakupan minimal 30% luas tanam; klaim Rp9-10 juta/ha setara biaya usaha tani; proses klaim <30 hari" },
+  { tier: "prs", title: "Perpres Neraca Komoditas Revisi", desc: "Formalisasi mekanisme trigger impor darurat; sinkronisasi dengan komitmen WTO dan ASEAN+3" },
+];
+
+const REG_3 = [
+  { tier: "uu", title: "Revisi UU 18/2012 Pangan", desc: "Kerangka baru pangan berkelanjutan dan berdaulat; integrasi Food-Water-Energy Nexus" },
+  { tier: "uu", title: "UU Sistem Pertanian Berkelanjutan", desc: "Payung transisi menuju pertanian rendah karbon; carbon farming; agroekologi" },
+  { tier: "uu", title: "UU Carbon Farming Pertanian", desc: "Insentif fiskal untuk praktik pertanian rendah emisi; skema perdagangan karbon domestik" },
+  { tier: "prs", title: "Perpres Diversifikasi Pangan Pokok", desc: "Target 40% non-beras pada 2045; promosi pangan lokal berbasis kearifan daerah" },
+  { tier: "prs", title: "Perpres Ekspor Pangan Bernilai Tambah", desc: "Kerangka ekspor produk turunan premium; Indonesia sebagai hub pangan Asia Tenggara" },
+];
+
+const ROADMAP_1 = [
+  { tier: "prs", title: "Perpres Single Farmer ID (2026)", desc: "Prioritas #1: integrasi data lintas program pangan" },
+  { tier: "prs", title: "Perpres Sistem Manajemen Risiko Iklim (2026)", desc: "Prioritas #2: mengantisipasi El Niño 2026" },
+  { tier: "prs", title: "Perpres Alsintan Pertanian (2026)", desc: "Prioritas #3: menutup gap payung hukum alsintan" },
+  { tier: "prs", title: "Revisi Perpres 125/2022 CPP (2027)", desc: "Mekanisme trigger impor darurat formal" },
+  { tier: "prs", title: "Perpres Terminal Agro (2027)", desc: "Stabilisasi komoditas perishable" },
+];
+
+const ROADMAP_2 = [
+  { tier: "uu", title: "Revisi UU 16/2006 Penyuluhan (Prolegnas 2027 - Pengesahan 2028)", desc: "Solusi struktural gap 45.000 penyuluh" },
+  { tier: "pp", title: "PP Alsintan Pertanian (2028)", desc: "Peningkatan tier dari Perpres ke PP untuk keberlanjutan" },
+  { tier: "pp", title: "Revisi PP 44/1995 Perbenihan (2028)", desc: "Modernisasi sistem perbenihan nasional" },
+  { tier: "uu", title: "UU KSPEA (2029)", desc: "Payung permanen; Badan Otorita setingkat IKN" },
+  { tier: "pp", title: "PP Asuransi Pertanian (2029)", desc: "Cakupan 30% luas tanam" },
+];
+
+const ROADMAP_3 = [
+  { tier: "uu", title: "Revisi UU 18/2012 Pangan (target 2035)", desc: "Kerangka baru: pangan berdaulat dan berkelanjutan" },
+  { tier: "uu", title: "UU Sistem Pertanian Berkelanjutan (target 2040)", desc: "Transisi ke pertanian rendah karbon" },
+  { tier: "uu", title: "UU Carbon Farming Pertanian (target 2040)", desc: "Insentif untuk praktik pertanian ramah lingkungan" },
+  { tier: "prs", title: "Perpres Diversifikasi Pangan Pokok (bertahap 2030-2045)", desc: "Target 40% non-beras" },
+  { tier: "prs", title: "Perpres Ekspor Pangan Bernilai Tambah (2030+)", desc: "Hub pangan Asia Tenggara" },
+];
+
+const KPI_DATA = [
+  { name: "Produksi beras", unit: "juta ton", base: "34,71", p1: "35,0", p2: "40,0", p3: "45,0" },
+  { name: "Produksi jagung", unit: "juta ton", base: "18,0", p1: "22,0", p2: "25,0", p3: "30,0" },
+  { name: "Produksi kedelai", unit: "juta ton", base: "0,4", p1: "0,7", p2: "2,0", p3: "3,5" },
+  { name: "Luas panen padi", unit: "juta ha", base: "11,35", p1: "11,5", p2: "11,8", p3: "12,0" },
+  { name: "Cetak sawah kumulatif", unit: "juta ha", base: "0,23", p1: "0,63", p2: "1,50", p3: "3,00" },
+  { name: "CBP (Cadangan Beras Pemerintah)", unit: "juta ton", base: "5,3", p1: "6,0", p2: "8,0", p3: "12,0" },
+  { name: "Impor beras", unit: "juta ton", base: "0", p1: "0", p2: "0", p3: "0" },
+  { name: "Ekspor beras", unit: "ribu ton", base: "0", p1: "100", p2: "500", p3: "2.000" },
+  { name: "Penyuluh aktif", unit: "ribu orang", base: "38", p1: "53", p2: "83", p3: "100+" },
+  { name: "Rasio penyuluh:desa", unit: "", base: "1:2", p1: "1:1,5", p2: "1:1", p3: "1:1" },
+  { name: "Susut panen", unit: "%", base: "12-15", p1: "<10", p2: "<8", p3: "<5" },
+  { name: "Cakupan AUTP", unit: "% luas tanam", base: "<10", p1: "30", p2: "50", p3: "100" },
+  { name: "Nilai Tukar Petani (NTP)", unit: "", base: "105", p1: "110", p2: "115", p3: "125" },
+  { name: "Rehabilitasi irigasi kumulatif", unit: "juta ha", base: "0,59", p1: "1,34", p2: "3,00", p3: "5,00" },
+  { name: "Diversifikasi pangan pokok", unit: "% non-beras", base: "15", p1: "18", p2: "22", p3: "40" },
+  { name: "Emisi GRK pertanian", unit: "% dari baseline", base: "100", p1: "95", p2: "85", p3: "70" },
+  { name: "Ekspor pangan bernilai tambah", unit: "USD miliar", base: "5", p1: "7", p2: "12", p3: "20" },
+];
+
+const RISIKO = [
+  { name: "Iklim ekstrem", level: "tinggi", desc: "El Niño 2026 (probabilitas 50-80% BMKG), banjir-kekeringan, kenaikan permukaan laut, intrusi salinitas. Dapat menurunkan produksi 5-10% per tahun.", mitigasi: "Sistem Manajemen Risiko Iklim Pertanian, varietas adaptif, IPHA, AUTP 30-100%, stockpile benih emergency, 20 bendungan baru." },
+  { name: "Fluktuasi harga global", level: "sedang", desc: "Volatilitas harga pupuk dan bahan bakar (untuk operasional pertanian) yang mempengaruhi biaya subsidi dan biaya usaha tani. Konflik geopolitik menjadi pendorong.", mitigasi: "Kemandirian industri pupuk (7 pabrik baru), diversifikasi sumber impor, cadangan strategis pupuk, subsidi berbasis kinerja." },
+  { name: "Konflik agraria KSPEA", level: "tinggi", desc: "Ekspansi 1 juta ha di tanah adat Marind berisiko konflik sosial serius. Pengalaman PLG dan food estate era sebelumnya sebagai pengingat.", mitigasi: "FPIC ketat dengan dokumentasi lengkap, model kemitraan equity-share dengan masyarakat adat, Dewan Pengawas Independen dengan klausul stop-go." },
+  { name: "Beban fiskal berkelanjutan", level: "tinggi", desc: "Anggaran kumulatif Rp3.500-4.800 T sepanjang 20 tahun. Tanpa peningkatan produktivitas signifikan, beban dapat crowding-out belanja sosial (kesehatan, pendidikan).", mitigasi: "Subsidi berbasis kinerja, efisiensi industri, monetisasi karbon farming, ekspor bernilai tambah untuk devisa, kerjasama investasi swasta." },
+  { name: "Perubahan rezim politik", level: "sedang", desc: "Grand design 2026-2045 melampaui 3-4 periode kepresidenan. Rezim baru dapat menggerus komitmen sebelumnya.", mitigasi: "Naikkan Inpres ke UU/PP, masuk RPJMN dan RPJPN, Badan Otorita KSPEA permanen, konsensus lintas partai." },
+  { name: "Krisis demografi petani", level: "sedang", desc: "Rata-rata usia petani 47 tahun, terus naik. Anak muda enggan bertani. Bila tidak diatasi, produksi jangka panjang terancam.", mitigasi: "Brigade Pangan sebagai wadah pemuda, mekanisasi 100%, subsidi berbasis kinerja untuk petani muda, program kembali ke desa." },
+  { name: "Ketegangan geopolitik regional", level: "sedang", desc: "Stop impor Indonesia berpengaruh ke Thailand, Vietnam, India (harga beras global turun 44%). Potensi ketegangan dagang atau tekanan diplomatik.", mitigasi: "Diplomasi pangan proaktif, ASEAN+ Rice Reserve diperkuat, kerjasama riset varietas, keterbukaan dialog." },
+  { name: "Deforestasi dan degradasi lingkungan", level: "tinggi", desc: "Cetak sawah 3 juta ha, ekspansi bioenergi B50, KSPEA di rawa gambut. Risiko emisi GRK naik, hilangnya biodiversity, tekanan iklim global.", mitigasi: "Batasi ekspansi ke non-gambut, sertifikasi keberlanjutan (ISPO, RSPO), monitoring satelit harian, komitmen NDC diperkuat." },
+];
+
+const KL_KLASTER = [
+  {
+    id: 1, name: "Lahan pertanian",
+    leading: "Kementerian Pertanian (Ditjen PSP + Ditjen LIP)",
+    supporting: ["Kementerian ATR/BPN — peta LP2B, integrasi RTRW", "Kementerian Dalam Negeri — koordinasi Pemda", "Kementerian Investasi — perizinan lokasi"],
+    bumn: [],
+    pemda: "Pemprov & Pemkab menetapkan LP2B dalam RTRW; Camat, Kades pengawasan alih fungsi",
+    pengawas: "BPK RI, BPKP, Ombudsman RI",
+    dasar: "UU 41/2009, Perpres 59/2019, Kepmen ATR 446.1/2024"
+  },
+  {
+    id: 2, name: "Bibit dan benih unggul",
+    leading: "Kementerian Pertanian (Ditjen Tanaman Pangan)",
+    supporting: ["BRIN — riset pemuliaan", "BRMP Padi — varietas unggul", "PVTPP — hak varietas"],
+    bumn: ["ID Food (PT Sang Hyang Seri, PT Pertani) — produsen benih BUMN"],
+    pemda: "BPSB (Balai Pengawasan Sertifikasi Benih) di setiap provinsi",
+    pengawas: "Ditjen TP Kementan, BPSB, BPK",
+    dasar: "UU 22/2019, UU 29/2000, PP 44/1995"
+  },
+  {
+    id: 3, name: "Pupuk bersubsidi",
+    leading: "Kementerian Pertanian (Ditjen PSP)",
+    supporting: ["Kementerian Perindustrian — industri pupuk", "Kementerian BUMN — holding pupuk", "Kementerian Keuangan — anggaran subsidi"],
+    bumn: ["PT Pupuk Indonesia (Persero) sebagai holding", "PIHC anggota: Petrokimia Gresik, Pusri Palembang, Pupuk Kaltim, Pupuk Kujang, Pupuk Iskandar Muda"],
+    pemda: "Dinas Pertanian kabupaten mengawasi distributor dan kios pengecer",
+    pengawas: "KPPU (kompetisi), Satgas Pangan, BPK",
+    dasar: "Perpres 15/2011, Kepmentan 644/2024 & 1117/2025"
+  },
+  {
+    id: 4, name: "Alat dan mesin pertanian",
+    leading: "Kementerian Pertanian (Ditjen PSP)",
+    supporting: ["Kementerian Perindustrian — produsen dalam negeri", "TNI (Babinsa) — pengawalan distribusi"],
+    bumn: [],
+    pemda: "Dinas Pertanian kabupaten mendistribusikan ke poktan/UPJA; Brigade Pangan sebagai pengelola",
+    pengawas: "Balai Besar Pengembangan Mekanisasi Pertanian, BPK",
+    dasar: "UU 22/2019 (tanpa Perpres/PP khusus alsintan — gap regulasi)"
+  },
+  {
+    id: 5, name: "Penanganan pascapanen",
+    leading: "Kementerian Pertanian (Ditjen Tanaman Pangan) + Badan Pangan Nasional",
+    supporting: ["Kementerian Perindustrian — industri pengolahan", "Kementerian PU — infrastruktur pendukung"],
+    bumn: ["Perum BULOG — gudang, RMU", "ID Food — pengolahan"],
+    pemda: "Dinas Pertanian kabupaten memfasilitasi lokasi gudang dan RMU",
+    pengawas: "Ditjen TP, Bapanas (standar mutu), BPK",
+    dasar: "UU 18/2012, Perpres 14/2026"
+  },
+  {
+    id: 6, name: "Infrastruktur pangan (irigasi)",
+    leading: "Kementerian Pekerjaan Umum (Ditjen SDA, BBWS)",
+    supporting: ["Kementerian Pertanian (Ditjen LIP) — jaringan tersier", "Bappenas — perencanaan"],
+    bumn: ["PT Brantas Abipraya, PT Waskita Karya, PT Wijaya Karya — kontraktor irigasi dan bendungan"],
+    pemda: "Dinas PUPR kabupaten — irigasi kabupaten; P3A/GP3A — pengelolaan tersier oleh petani",
+    pengawas: "BPK, BPKP, Inspektorat Kemen-PU",
+    dasar: "UU 17/2019, PP 121/2015, Inpres 2/2025"
+  },
+  {
+    id: 7, name: "Penyuluh pertanian",
+    leading: "Kementerian Pertanian (BPPSDMP)",
+    supporting: ["Kementerian PANRB — pengaturan PPPK", "Kementerian Keuangan — anggaran", "Kementerian Desa — integrasi program desa"],
+    bumn: [],
+    pemda: "BPP (Balai Penyuluhan Pertanian) tingkat kecamatan; Dinas Pertanian kabupaten sebagai atasan langsung PPL",
+    pengawas: "Ditjen Kementan, PANRB, BPK",
+    dasar: "UU 16/2006, PP 43/2009"
+  },
+  {
+    id: 8, name: "Cadangan pangan pemerintah",
+    leading: "Badan Pangan Nasional (regulator)",
+    supporting: ["Kementerian BUMN — koordinasi operator", "Kementerian Keuangan — pembiayaan CPP", "Kementan — pengadaan gabah"],
+    bumn: ["Perum BULOG — operator utama CBP dan CJP", "ID Food (holding) — operator CKP dan komoditas lain"],
+    pemda: "Cadangan Pangan Pemerintah Daerah (CPPD) opsional; Dinas Ketahanan Pangan provinsi/kabupaten",
+    pengawas: "BPK, BPKP, KPPU",
+    dasar: "UU 18/2012, Perpres 125/2022, Perpres 48/2016 & 20/2017"
+  },
+  {
+    id: 9, name: "Stabilisasi harga",
+    leading: "Badan Pangan Nasional",
+    supporting: ["Kementerian Perdagangan — perdagangan dalam negeri", "Kementerian Dalam Negeri — TPID daerah", "Bank Indonesia — TPIP pusat"],
+    bumn: ["Perum BULOG — SPHP beras dan jagung", "ID Food — komoditas perishable dan lainnya"],
+    pemda: "TPID (Tim Pengendali Inflasi Daerah), Satgas Pangan Daerah, Gerakan Pangan Murah",
+    pengawas: "KPPU, Kepolisian (Satgas Pangan), BPK",
+    dasar: "Perpres 71/2015, Inpres 4/2026, Perbadan 15/2022"
+  },
+  {
+    id: 10, name: "Supply chain dan distribusi",
+    leading: "Badan Pangan Nasional (koordinasi rantai pasok)",
+    supporting: ["Kementerian Perdagangan — perdagangan", "Kementerian Perhubungan — transportasi", "Kementerian Perindustrian — pengolahan", "Kominfo — digitalisasi rantai pasok"],
+    bumn: ["Perum BULOG — distribusi beras", "ID Food — holding pangan", "PT Kereta Api Logistik, PT Pos Indonesia — logistik"],
+    pemda: "Pemprov/Pemkab menyelenggarakan Kios Pangan, GPM, dan Fasilitasi Distribusi Pangan (FDP)",
+    pengawas: "BPK, KPPU, Bapanas",
+    dasar: "Perpres 71/2015, Perpres 14/2026, PMK 84/2025"
+  },
+  {
+    id: 11, name: "Ekspor dan impor pangan",
+    leading: "Kementerian Perdagangan (Ditjen Perdagangan Luar Negeri)",
+    supporting: ["Kemenko Pangan — Neraca Komoditas", "Bapanas — rekomendasi supply", "Kemenlu — diplomasi pangan", "Bea Cukai — pengawasan pintu", "Karantina Pertanian — SPS"],
+    bumn: ["Perum BULOG — impor beras (bila ada)", "ID Food — komoditas lain"],
+    pemda: "-",
+    pengawas: "Bea Cukai, Karantina, BPK, KPPU",
+    dasar: "UU 7/2014, Perpres 32/2022 Neraca Komoditas, PP 5/2021"
+  },
+  {
+    id: 12, name: "KSPEA",
+    leading: "Kementerian Koordinator Bidang Pangan (Ketua Tim Koordinasi 27 K/L)",
+    supporting: ["Kementan — cetak sawah, saprodi", "Kemen-PU — irigasi rawa, jalan", "Kemhan/TNI — pengamanan", "KLH — izin lingkungan", "Kem-ATR/BPN — tata ruang", "Kem-ESDM — pilar energi (B50, bioetanol)", "Kemenperin — industri hilir", "Kem-Investasi — pembiayaan"],
+    bumn: ["PT Brantas Abipraya — jaringan irigasi rawa", "Pindad — industri pertahanan Wanam", "PT INKA — konektivitas", "PIHC — pupuk KSPEA"],
+    pemda: "Pemprov Papua Selatan, Pemkab Merauke & Boven Digoel — koordinasi lokal dan hak masyarakat adat Marind",
+    pengawas: "Dewan Pengawas Independen (usulan), BPK, KLH",
+    dasar: "Inpres 14/2025, Keppres 19/2025, PP 40/2025"
+  },
+];
+
+// Rendering functions
+function renderPrograms(data, id) {
+  document.getElementById(id).innerHTML = data.map(p => `
+    <div class="program-card">
+      <p class="program-cluster">${p.cluster}</p>
+      <p class="program-title">${p.title}</p>
+      <p class="program-desc">${p.desc}</p>
+      ${p.leading ? `<p class="program-leading"><strong>Leading:</strong> ${p.leading}</p>` : ""}
+    </div>
+  `).join("");
+}
+
+function renderKLKlaster() {
+  document.getElementById("kl-grid").innerHTML = KL_KLASTER.map(k => `
+    <div class="kl-card">
+      <div class="kl-head">
+        <span class="kl-num">${k.id}</span>
+        <p class="kl-cluster-name">${k.name}</p>
+      </div>
+      <div class="kl-row">
+        <span class="kl-role lead">Leading</span>
+        <div class="kl-value lead">${k.leading}</div>
+      </div>
+      ${k.supporting.length ? `<div class="kl-row"><span class="kl-role">Supporting</span><div class="kl-value"><ul>${k.supporting.map(s => `<li>${s}</li>`).join("")}</ul></div></div>` : ""}
+      ${k.bumn.length ? `<div class="kl-row"><span class="kl-role">BUMN Operator</span><div class="kl-value"><ul>${k.bumn.map(s => `<li>${s}</li>`).join("")}</ul></div></div>` : ""}
+      ${k.pemda && k.pemda !== "-" ? `<div class="kl-row"><span class="kl-role">Pemda</span><div class="kl-value">${k.pemda}</div></div>` : ""}
+      <div class="kl-row"><span class="kl-role">Pengawas</span><div class="kl-value">${k.pengawas}</div></div>
+      <p class="kl-dasar">Dasar hukum: ${k.dasar}</p>
+    </div>
+  `).join("");
+}
+
+function renderMilestones(data, id, phase) {
+  document.getElementById(id).innerHTML = data.map(m => `
+    <div class="milestone m${phase}">
+      <p class="milestone-time">${m.time}</p>
+      <p class="milestone-title">${m.title}</p>
+      <p class="milestone-desc">${m.desc}</p>
+    </div>
+  `).join("");
+}
+
+function renderRegulasi(data, id) {
+  document.getElementById(id).innerHTML = data.map(r => `
+    <div class="regulasi-item">
+      <span class="reg-tier ${r.tier}">${r.tier === "uu" ? "UU" : r.tier === "pp" ? "PP" : r.tier === "prs" ? "Perpres" : "Teknis"}</span>
+      <div class="reg-body">
+        <p class="reg-title">${r.title}</p>
+        <p class="reg-desc">${r.desc}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderKPITable() {
+  document.getElementById("kpi-table-body").innerHTML = KPI_DATA.map(k => `
+    <tr>
+      <td><span class="kpi-name">${k.name}</span>${k.unit ? `<span class="kpi-unit">(${k.unit})</span>` : ""}</td>
+      <td class="num">${k.base}</td>
+      <td class="num p1n">${k.p1}</td>
+      <td class="num p2n">${k.p2}</td>
+      <td class="num p3n">${k.p3}</td>
+    </tr>
+  `).join("");
+}
+
+function renderRisiko() {
+  document.getElementById("risiko-grid").innerHTML = RISIKO.map(r => `
+    <div class="risiko-card">
+      <p class="risiko-name">${r.name} <span class="risiko-level ${r.level === "sedang" ? "sedang" : ""}">${r.level}</span></p>
+      <p class="risiko-desc">${r.desc}</p>
+      <p class="risiko-mitigasi"><strong>Mitigasi:</strong> ${r.mitigasi}</p>
+    </div>
+  `).join("");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderPrograms(PROGRAMS_1, "prog-1");
+  renderPrograms(PROGRAMS_2, "prog-2");
+  renderPrograms(PROGRAMS_3, "prog-3");
+  renderMilestones(MILESTONES_1, "ms-1", 1);
+  renderMilestones(MILESTONES_2, "ms-2", 2);
+  renderMilestones(MILESTONES_3, "ms-3", 3);
+  renderRegulasi(REG_1, "reg-1");
+  renderRegulasi(REG_2, "reg-2");
+  renderRegulasi(REG_3, "reg-3");
+  renderRegulasi(ROADMAP_1, "roadmap-1");
+  renderRegulasi(ROADMAP_2, "roadmap-2");
+  renderRegulasi(ROADMAP_3, "roadmap-3");
+  renderKPITable();
+  renderRisiko();
+  renderKLKlaster();
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+    });
+  });
+});
+</script>
+</body>
+</html>
